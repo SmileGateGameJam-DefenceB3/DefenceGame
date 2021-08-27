@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using Common;
+using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu]

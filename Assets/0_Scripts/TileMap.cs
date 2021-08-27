@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Common;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -47,7 +47,6 @@ public class TileMap : MonoBehaviour
                 var tile = Instantiate(Prefabs.Instance.Tile, transform);
                 tile.Initialize(new Vector2Int(x, y), this);
                 tile.gameObject.name = $"Tile ({x},{y})";
-                tile.transform.localPosition = new Vector3(Constant.Instance.TileSize.x * x, Constant.Instance.TileSize.y * y, 1f);
                 _tiles[x, y] = tile;
             }
         }
@@ -57,7 +56,8 @@ public class TileMap : MonoBehaviour
     private void DummySpawn()
     {
         var actor = Instantiate(Prefabs.Instance.Actor);
-        actor.Initialize(_tiles[0, 2], 1);
+        actor.Initialize(1, Team.Player);
+        actor.PlaceToTile(_tiles[0, 2]);
         actor.StartMoveToNextTile();
     }
 }

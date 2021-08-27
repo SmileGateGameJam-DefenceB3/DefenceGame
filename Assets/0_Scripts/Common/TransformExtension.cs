@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-public static class TransformExtension
+namespace Common
 {
-    public static void DestroyAllChildren(this Transform transform)
+    public static class TransformExtension
     {
-        for (int i = transform.childCount - 1; i >= 0; i--)
+        public static void DestroyAllChildren(this Transform transform)
         {
-            var child = transform.GetChild(i);
-            Object.Destroy(child.gameObject);
+            for (int i = transform.childCount - 1; i >= 0; i--)
+            {
+                var child = transform.GetChild(i);
+                Object.Destroy(child.gameObject);
+            }
         }
     }
 }

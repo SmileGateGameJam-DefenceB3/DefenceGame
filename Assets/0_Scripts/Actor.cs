@@ -3,19 +3,28 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
+    [SerializeField] private Collider2D _collider;
+    [SerializeField] private ActorView _view;
+    
     private Tile _currentTile;
     private Tile _nextTile;
     private int _direction;
     private bool _pauseMoving;
     
+    public Team Team { get; private set; }
     public float MoveSpeed { get; set; }
+    public ActorView View => _view;
     
-    public void Initialize(Tile tile, int direction)
+    public void Initialize(int direction, Team team)
     {
         _direction = direction;
         MoveSpeed = Constant.Instance.ActorMoveSpeed;
+        Team = team;
+    }
 
-        PlaceToTile(tile);
+    public void Activate()
+    {
+        _collider.enabled = true;
     }
 
     public void PlaceToTile(Tile tile)
