@@ -16,7 +16,6 @@ public class Actor : MonoBehaviour
         MoveSpeed = Constant.Instance.ActorMoveSpeed;
 
         PlaceToTile(tile);
-        StartMoveToNextTile();
     }
 
     public void PlaceToTile(Tile tile)
@@ -40,7 +39,7 @@ public class Actor : MonoBehaviour
             _nextTile = _currentTile.GetAdjacent(_direction, 0);
             if (_nextTile == null)
             {
-                break;
+                yield break;
             }
             
             while (true)
@@ -55,7 +54,7 @@ public class Actor : MonoBehaviour
 
                 currentX += _direction * MoveSpeed * Time.deltaTime;
 
-                if (_direction == -1)
+                if (_direction < 0)
                 {
                     currentX = Mathf.Max(currentX, targetX);
                 }
@@ -64,14 +63,16 @@ public class Actor : MonoBehaviour
                     currentX = Mathf.Min(currentX, targetX);
                 }
 
-                if (currentX == targetX)
-                {
-                    break;
-                }
-
                 var position = transform.position;
                 position.x = currentX;
                 transform.position = position;
+                
+                if (currentX == targetX)
+                {
+                    _currentTile = _nextTile;
+                    yield return null;
+                    break;
+                }
                 
                 yield return null;
             }

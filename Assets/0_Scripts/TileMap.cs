@@ -1,10 +1,9 @@
 ﻿using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class TileMap : MonoBehaviour
 {
-    [SerializeField] private Tile _tilePrefab;
-
     public Vector2Int Size { get; private set; }
     private Tile[,] _tiles;
 
@@ -45,12 +44,20 @@ public class TileMap : MonoBehaviour
         {
             for (int y = 0; y < Size.y; y++)
             {
-                var tile = Instantiate(_tilePrefab, transform);
+                var tile = Instantiate(Prefabs.Instance.Tile, transform);
                 tile.Initialize(new Vector2Int(x, y), this);
                 tile.gameObject.name = $"Tile ({x},{y})";
                 tile.transform.localPosition = new Vector3(Constant.Instance.TileSize.x * x, Constant.Instance.TileSize.y * y, 1f);
                 _tiles[x, y] = tile;
             }
         }
+    }
+
+    [Button]
+    private void DummySpawn()
+    {
+        var actor = Instantiate(Prefabs.Instance.Actor);
+        actor.Initialize(_tiles[0, 2], 1);
+        actor.StartMoveToNextTile();
     }
 }
