@@ -36,13 +36,14 @@ namespace UI
             StopPlacingActor();
 
             _placingActor = Instantiate(actorPrefab);
-            actorPrefab.Initialize(1, Team.Player);
+            _placingActor.Initialize(1, Team.Player);
             StartCoroutine(nameof(PlaceActorCo));
         }
 
         public void PlaceActor(Tile tile)
         {
-            InGameManager.ActorManager.PlaceActor(_placingActor, Team.Player, tile);
+            _placingActor.View.SpriteRenderer.sortingOrder = Constant.ActorSortingOrder;
+            InGameManager.ActorManager.SpawnActor(_placingActor, Team.Player, tile);
             
             _placingActor = null;
             StopPlacingActor();
@@ -51,18 +52,34 @@ namespace UI
         private IEnumerator PlaceActorCo()
         {
             _placingActor.View.SpriteRenderer.sortingOrder = Constant.PlacingActorSortingOrder;
-            
+
+            bool isFirstFrame = true;
             while (true)
             {
                 var worldPosition = InGameUIManager.Instance.UICamera.ScreenToWorldPoint(Input.mousePosition);
                 _placingActor.transform.position = worldPosition;
 
-                if (!EventSystem.current.IsPointerOverGameObject() && InputManager.Instance.CurrentHoveredTile != null)
+                var hoveredTile = InputManager.Instance.CurrentHoveredTile;
+                if (hoveredTile != null)
                 {
-                    PlaceActor(InputManager.Instance.CurrentHoveredTile);
+                    _placingActor.transform.position = hoveredTile.transform.position;
+                }
+
+                if (!isFirstFrame && Input.GetMouseButtonUp(0))
+                {
+                    if (hoveredTile != null)
+                    {
+                        PlaceActor(InputManager.Instance.CurrentHoveredTile);
+                    }
+                    else
+                    {
+                        StopPlacingActor();
+                    }
+
                     yield break;
                 }
-                
+
+                isFirstFrame = false;
                 yield return null;
             }
         }

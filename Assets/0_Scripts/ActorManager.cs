@@ -4,7 +4,7 @@ public class ActorManager
 {
     private readonly Dictionary<Team, List<Actor>> _teamActors = new Dictionary<Team, List<Actor>>();
     
-    public void PlaceActor(Actor actor, Team team, Tile tile)
+    public void SpawnActor(Actor actor, Team team, Tile tile)
     {
         actor.PlaceToTile(tile);
         actor.StartMoveToNextTile();
