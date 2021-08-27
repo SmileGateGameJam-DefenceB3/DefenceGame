@@ -44,11 +44,11 @@ namespace UI
         {
             _placingActor.View.SpriteRenderer.sortingOrder = Constant.ActorSortingOrder;
             InGameManager.ActorManager.SpawnActor(_placingActor, Team.Player, tile);
-            
+
             _placingActor = null;
             StopPlacingActor();
         }
-        
+
         private IEnumerator PlaceActorCo()
         {
             _placingActor.View.SpriteRenderer.sortingOrder = Constant.PlacingActorSortingOrder;
@@ -56,7 +56,8 @@ namespace UI
             bool isFirstFrame = true;
             while (true)
             {
-                var worldPosition = InGameUIManager.Instance.UICamera.ScreenToWorldPoint(Input.mousePosition);
+                var worldPosition = InGameUIManager.Instance.Camera.ScreenToWorldPoint(Input.mousePosition);
+                worldPosition.z = 0;
                 _placingActor.transform.position = worldPosition;
 
                 var hoveredTile = InputManager.Instance.CurrentHoveredTile;
@@ -65,7 +66,7 @@ namespace UI
                     _placingActor.transform.position = hoveredTile.transform.position;
                 }
 
-                if (!isFirstFrame && Input.GetMouseButtonUp(0))
+                if (!isFirstFrame && (Input.GetMouseButtonUp(0)))
                 {
                     if (hoveredTile != null)
                     {
@@ -79,18 +80,24 @@ namespace UI
                     yield break;
                 }
 
+                if (Input.GetMouseButtonDown(1))
+                {
+                    StopPlacingActor();
+                    yield break;
+                }
+
                 isFirstFrame = false;
                 yield return null;
             }
         }
-        
+
         public void StopPlacingActor()
         {
             foreach (var button in _buttons)
             {
                 button.SetPressed(false);
             }
-            
+
             StopCoroutine(nameof(PlaceActorCo));
             if (_placingActor != null)
             {

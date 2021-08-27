@@ -6,9 +6,9 @@ namespace UI
     public class InGameUIManager : SingletonMonoBehaviour<InGameUIManager>
     {
         [SerializeField] private RectTransform _uiRoot;
-        [SerializeField] private Camera _uiCamera;
+        [SerializeField] private Camera _camera;
 
         public RectTransform UIRoot => _uiRoot;
-        public Camera UICamera => _uiCamera;
+        public Camera Camera => _camera;
     }
 }
