@@ -1,6 +1,7 @@
 ﻿using System;
 using Common;
 using System.Collections;
+using UI;
 using UnityEngine;
 
 public enum GameState
@@ -49,6 +50,8 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     {
         _enemySpawner.EndSpawn();
         GameState = GameState.End;
+
+        InGameUIManager.Instance.GameOverScreen.gameObject.SetActive(true);
     }
 
     private Kingdom GetKingdom(Team team)

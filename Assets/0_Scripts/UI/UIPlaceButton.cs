@@ -19,6 +19,11 @@ namespace UI
 
         private void Update()
         {
+            if (InGameManager.Instance.GameState == GameState.End)
+            {
+                return;
+            }
+            
             if (Input.GetKeyDown(_keyCode))
             {
                 OnClick();

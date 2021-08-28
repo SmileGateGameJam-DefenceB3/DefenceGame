@@ -135,6 +135,11 @@ public class Actor : MonoBehaviour
 
             bool MoveStepTo(float targetX)
             {
+                if (InGameManager.Instance.GameState == GameState.End)
+                {
+                    return false;
+                }
+                
                 float currentX = transform.position.x;
                 currentX += _direction * MoveSpeed * Time.deltaTime;
 

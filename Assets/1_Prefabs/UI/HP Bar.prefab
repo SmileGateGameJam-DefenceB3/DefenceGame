@@ -299,7 +299,7 @@ MonoBehaviour:
   intensity: 1
   gradientType: 0
   linearColor1: {r: 1, g: 1, b: 1, a: 1}
-  linearColor2: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  linearColor2: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
   cornerColorUpperLeft: {r: 1, g: 0, b: 0, a: 1}
   cornerColorUpperRight: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   cornerColorLowerRight: {r: 0, g: 1, b: 0, a: 1}

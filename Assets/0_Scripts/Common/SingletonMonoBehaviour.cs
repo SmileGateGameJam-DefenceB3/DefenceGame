@@ -1,21 +1,37 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Common
 {
     public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private static readonly Lazy<T> _instance = new Lazy<T>(() =>
+        private static T _instance;
+        public static T Instance
         {
-            var instance = FindObjectOfType<T>();
-            if (instance == null)
+            get
             {
-                instance = new GameObject(nameof(T)).AddComponent<T>();
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType<T>();
+                }
+
+                return _instance;
             }
+        }
 
-            return instance;
-        });
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
 
-        public static T Instance => _instance.Value;
+        private void OnDestroy()
+        {
+            if (Instance == null)
+            {
+                _instance = null;
+            }
+        }
     }
 }
