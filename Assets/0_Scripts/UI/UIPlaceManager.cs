@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,8 +8,15 @@ namespace UI
 {
     public class UIPlaceManager : MonoBehaviour
     {
+        [Serializable]
+        public class KeyCodes
+        {
+            public List<KeyCode> Codes;
+        }
+        
         [SerializeField] private GameObject _food;
-
+        [SerializeField] private List<KeyCodes> _keyCodes;
+        
         private List<UIPlaceButton> _buttons;
         private Actor _placingActor;
         private UIPlaceButton _currentButton;
@@ -18,7 +26,7 @@ namespace UI
             _buttons = GetComponentsInChildren<UIPlaceButton>().ToList();
             foreach (var button in _buttons)
             {
-                button.Initialize(this);
+                button.Initialize(this, _keyCodes[button.transform.GetSiblingIndex()].Codes);
             }
         }
 

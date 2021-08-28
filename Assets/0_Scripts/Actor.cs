@@ -14,6 +14,7 @@ public class Actor : MonoBehaviour
     private Tile _nextTile;
     private int _direction;
     private bool _pauseMoving;
+    private bool _isDead;
 
     public ActorData Data { get; private set; }
     public ActorView View => _view;
@@ -23,7 +24,6 @@ public class Actor : MonoBehaviour
     public int Damage => Data.Grade + Level - 1;
     public int Level { get; private set; }
     public Team Team { get; private set; }
-    public float MoveSpeed { get; set; }
     public int Y => _currentTile.Coord.y;
 
     public bool CanLevelUp => Level < Data.MaxLevel;
@@ -34,7 +34,6 @@ public class Actor : MonoBehaviour
     public void Initialize(ActorData data, Team team, int direction, int level = 1)
     {
         Data = data;
-        MoveSpeed = Constant.Instance.ActorMoveSpeed;
         SetLevel(level, true);
         SetTeam(team);
         SetDirection(direction);
@@ -148,7 +147,7 @@ public class Actor : MonoBehaviour
                 }
 
                 float currentX = transform.position.x;
-                currentX += _direction * MoveSpeed * Time.deltaTime;
+                currentX += _direction * Constant.Instance.ActorMoveSpeed * Time.deltaTime;
 
                 if (_direction < 0)
                 {
@@ -177,6 +176,11 @@ public class Actor : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        if (_isDead)
+        {
+            return;
+        }
+        
         if (CheckActorCollide(other))
         {
             return;
@@ -191,6 +195,11 @@ public class Actor : MonoBehaviour
         if (otherActor == null)
         {
             return false;
+        }
+        
+        if (otherActor._isDead)
+        {
+            return true;
         }
 
         if (otherActor.Team == Team)
@@ -219,6 +228,7 @@ public class Actor : MonoBehaviour
 
     public void LevelUp()
     {
+        Debug.Log("UP");
         if (!CanLevelUp)
         {
             return;
@@ -233,7 +243,12 @@ public class Actor : MonoBehaviour
         var item = other.GetComponent<Item>();
         if (item == null)
             return;
-        item.Func(this);
+
+        other.enabled = false;
+        if (other.enabled)
+        {
+            item.Func(this);
+        }
     }
 
     private bool CanTakeItem(Item item)
@@ -243,6 +258,8 @@ public class Actor : MonoBehaviour
 
     public async void Die(bool playAnimation = true, bool playSound = true)
     {
+        _isDead = true;
+        
         if (playSound)
         {
             SoundManager.PlaySfx(ClipType.Die);

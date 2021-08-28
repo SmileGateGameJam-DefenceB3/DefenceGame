@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 407aad124aee4abc8e7929a91cf5d10e, type: 3}
-  m_Name: Elephant
+  m_Name: Zebra
   m_EditorClassIdentifier: 
-  Type: 5
-  Prefab: {fileID: 175809634478375491, guid: 2b467a4602959de408b3b0bcb391f84d, type: 3}
-  Name: "\uCF54\uB07C\uB9AC"
+  Type: 2
+  Prefab: {fileID: 175809634478375491, guid: 96adb3b77c20f7a41a89cb4dbad67dd7, type: 3}
+  Name: "\uC5BC\uB8E9\uB9D0"
   MaxLevel: 4
-  Grade: 5
-  Cost: 5
+  Grade: 2
+  Cost: 2

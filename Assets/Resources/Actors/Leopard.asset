@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407aad124aee4abc8e7929a91cf5d10e, type: 3}
   m_Name: Leopard
   m_EditorClassIdentifier: 
-  Type: 2
+  Type: 3
   Prefab: {fileID: 175809634478375491, guid: d96b5acef690cc740b07d40fe3d610d7, type: 3}
   Name: "\uD751\uD45C\uBC94"
   MaxLevel: 4

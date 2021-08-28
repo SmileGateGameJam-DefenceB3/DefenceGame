@@ -10,47 +10,59 @@ public class ItemRespawn : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(RespawnItemCo());
+        StartCoroutine(SpawnHealthCo());
+        StartCoroutine(SpawnLevelUpCo());
     }
 
-    IEnumerator RespawnItemCo()
+    private IEnumerator SpawnHealthCo()
     {
-        var tileMap = FindObjectOfType(typeof(TileMap)) as TileMap;
-        while (true)
+        while (InGameManager.Instance.GameState == GameState.Playing)
         {
-            float delay = Random.Range(1, respawnTime);
+            float delay = Random.Range(9f, 11f);
             yield return new WaitForSeconds(delay);
-            //debugging
-            int randX = Random.Range(0, 8);
-            int randY = Random.Range(0, 5);
-            int type = Random.Range(0, 2);
-            var itemPrefab = default(GameObject);
-            if (type == 0)
-                itemPrefab = healthItem;
-            else
-                itemPrefab = levelUpItem;
+            SpawnItem(0);
 
-            //get tile position
-            Vector3 tile = tileMap[randX, randY].transform.position;
+        }
+    }
 
-            //����
-            if (itemPrefab is null)
-                continue;
+    private IEnumerator SpawnLevelUpCo()
+    {
+        while (InGameManager.Instance.GameState == GameState.Playing)
+        {
+            float delay = Random.Range(4.5f, 5.5f);
+            yield return new WaitForSeconds(delay);
+            SpawnItem(1);
+        }
+    }
 
-            SoundManager.PlaySfx(ClipType.ItemSpawn);
-            var obj = Instantiate(itemPrefab, new Vector3(tile.x, tile.y + 0.1f,
-                0), Quaternion.identity);
-            var objViewImage = obj.transform.Find("ViewImage").gameObject;
-            objViewImage.transform.localScale = new Vector2(0.0f, 0.0f);
+    private void SpawnItem(int type)
+    {
+        //debugging
+        int randX = Random.Range(0, 8);
+        int randY = Random.Range(0, 5);
 
-            var objShadow = obj.transform.Find("ShaderImage").gameObject;
-            objShadow.transform.localScale = new Vector2(0.0f, 0.0f);
+        //get tile position
+        Vector3 tile = InGameManager.TileMap[randX, randY].transform.position;
+        
+        var itemPrefab = default(GameObject);
+        if (type == 0)
+            itemPrefab = healthItem;
+        else
+            itemPrefab = levelUpItem;
+        
+        SoundManager.PlaySfx(ClipType.ItemSpawn);
+        var obj = Instantiate(itemPrefab, new Vector3(tile.x, tile.y + 0.1f,
+            0), Quaternion.identity);
+        var objViewImage = obj.transform.Find("ViewImage").gameObject;
+        objViewImage.transform.localScale = new Vector2(0.0f, 0.0f);
 
-            if (type != 0)
-            {
-                int angler = Random.Range(0, 2);
-                objViewImage.transform.rotation = (angler == 0) ? Quaternion.Euler(0, 0, 18) : Quaternion.Euler(0, 0, -18);
-            }
+        var objShadow = obj.transform.Find("ShaderImage").gameObject;
+        objShadow.transform.localScale = new Vector2(0.0f, 0.0f);
+
+        if (type != 0)
+        {
+            int angler = Random.Range(0, 2);
+            objViewImage.transform.rotation = (angler == 0) ? Quaternion.Euler(0, 0, 18) : Quaternion.Euler(0, 0, -18);
         }
     }
 }

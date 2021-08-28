@@ -4,6 +4,7 @@ public enum ActorType
 {
     None,
     Rabbit,
+    Zebra,
     Leopard,
     Lion,
     Elephant,
