@@ -10,4 +10,8 @@ public static class TeamExtension
     {
         return team == Team.Player ? Team.CPU : Team.Player;
     }
+    public static Team GetMy(this Team team)
+    {
+        return team == Team.Player ? Team.Player : Team.CPU;
+    }
 }

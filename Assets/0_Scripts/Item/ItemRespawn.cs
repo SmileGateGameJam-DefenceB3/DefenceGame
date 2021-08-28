@@ -41,6 +41,9 @@ public class ItemRespawn : MonoBehaviour
             var objViewImage = obj.transform.Find("ViewImage").gameObject;
             objViewImage.transform.localScale = new Vector2(0.0f, 0.0f);
 
+            var objShadow = obj.transform.Find("ShaderImage").gameObject;
+            objShadow.transform.localScale = new Vector2(0.0f, 0.0f);
+
             if (type != 0)
             {
                 int angler = Random.Range(0, 2);
