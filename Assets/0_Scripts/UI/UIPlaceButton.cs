@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ namespace UI
     {
         [SerializeField] private Button _button;
         [SerializeField] private Animator _animator;
+        [SerializeField] private TextMeshProUGUI _sc;
 
         private List<KeyCode> _keyCodes;
         protected UIPlaceManager _manager;
@@ -18,6 +20,7 @@ namespace UI
 
             _manager = manager;
             InGameManager.Instance.OnGoldChanged.AddListener(value => { _button.interactable = value >= GetCost(); });
+            _sc.text = _keyCodes[1].ToString();
         }
 
         public abstract int GetCost();

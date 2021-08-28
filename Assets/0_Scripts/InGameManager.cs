@@ -15,6 +15,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 {
     [SerializeField] private Kingdom _playerKingdom;
     [SerializeField] private Kingdom _cpuKingdom;
+    [SerializeField] private Tutorial _tutorial;
 
     public static ActorManager ActorManager => Instance._actorManager;
     private ActorManager _actorManager;
@@ -59,7 +60,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
             SoundManager.PlayBGM(ClipType.InGameBGM);
         }
 
-        StartGame();
+        _tutorial.gameObject.SetActive(true);
     }
 
     public void StartGame()
