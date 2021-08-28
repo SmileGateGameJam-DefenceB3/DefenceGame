@@ -63,6 +63,11 @@ namespace UI
 
         private bool IsEnemyArea(Tile tile)
         {
+            if (tile == null)
+            {
+                return false;
+            }
+            
             return tile.Coord.x >= Constant.Instance.MapSize.x / 2;
         }
 
@@ -149,6 +154,12 @@ namespace UI
                         }
                     }
 
+                    StopPlacing();
+                    yield break;
+                }
+                
+                if (Input.GetMouseButtonDown(1))
+                {
                     StopPlacing();
                     yield break;
                 }
