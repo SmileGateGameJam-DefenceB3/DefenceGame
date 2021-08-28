@@ -8,11 +8,11 @@ namespace UI
     public class UIPlaceManager : MonoBehaviour
     {
         [SerializeField] private GameObject _food;
-        
+
         private List<UIPlaceButton> _buttons;
         private Actor _placingActor;
         private UIPlaceButton _currentButton;
-        
+
         private void Awake()
         {
             _buttons = GetComponentsInChildren<UIPlaceButton>().ToList();
@@ -60,6 +60,7 @@ namespace UI
             }
 
             _placingActor.View.AdjustSortingOrders(-Constant.PlacingOrder);
+            AmazingAIScript.Instance.OnPlayerSpawned(tile, _placingActor);
             InGameManager.Instance.Gold -= _currentButton.GetCost();
             InGameManager.ActorManager.SpawnActor(_placingActor, tile);
 
@@ -73,7 +74,7 @@ namespace UI
             {
                 return false;
             }
-            
+
             return tile.Coord.x >= Constant.Instance.MapSize.x / 2;
         }
 
@@ -149,7 +150,7 @@ namespace UI
                 var worldPosition = InGameUIManager.Instance.Camera.ScreenToWorldPoint(Input.mousePosition);
                 worldPosition.z = 0;
                 _food.transform.position = worldPosition;
-                
+
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (!IsEnemyArea(InputManager.Instance.CurrentHoveredTile))
@@ -168,7 +169,7 @@ namespace UI
                     StopPlacing();
                     yield break;
                 }
-                
+
                 if (Input.GetMouseButtonDown(1))
                 {
                     StopPlacing();

@@ -24,17 +24,18 @@ public class Actor : MonoBehaviour
     public int Level { get; private set; }
     public Team Team { get; private set; }
     public float MoveSpeed { get; set; }
+    public int Y => _currentTile.Coord.y;
 
     public bool CanLevelUp => Level < Data.MaxLevel;
 
     public static int Id;
     public int ActorId;
-    
-    public void Initialize(ActorData data, Team team, int direction)
+
+    public void Initialize(ActorData data, Team team, int direction, int level = 1)
     {
         Data = data;
         MoveSpeed = Constant.Instance.ActorMoveSpeed;
-        SetLevel(1, true);
+        SetLevel(level, true);
         SetTeam(team);
         SetDirection(direction);
 
@@ -45,10 +46,7 @@ public class Actor : MonoBehaviour
     public void SetLevel(int level, bool isInitial = false)
     {
         Level = level;
-        if (!isInitial)
-        {
-            View.OnLevelChanged(Level);
-        }
+        View.OnLevelChanged(Level, isInitial);
     }
 
     public void SetTeam(Team team)
@@ -218,7 +216,7 @@ public class Actor : MonoBehaviour
 
         return true;
     }
-    
+
     public void LevelUp()
     {
         if (!CanLevelUp)

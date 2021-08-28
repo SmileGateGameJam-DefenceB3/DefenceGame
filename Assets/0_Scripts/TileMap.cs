@@ -23,6 +23,8 @@ public class TileMap : SingletonMonoBehaviour<TileMap>
         }
     }
 
+    public Tile[,] Tiles => _tiles;
+    
     public bool IsInBound(int x, int y) => 0 <= x && x < Width && 0 <= y && y < Height;
 
     public void Initialize(bool nonDestroy)

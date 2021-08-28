@@ -13,7 +13,6 @@ public enum GameState
 
 public class InGameManager : SingletonMonoBehaviour<InGameManager>
 {
-    [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private Kingdom _playerKingdom;
     [SerializeField] private Kingdom _cpuKingdom;
     
@@ -67,12 +66,26 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     {
         Actor.Id = 0;
         GameState = GameState.Playing;
-        _enemySpawner.StartSpawn();
+        AmazingAIScript.Instance.Run();
+    }
+
+    private void Update()
+    {
+        if (GameState == GameState.Playing)
+        {
+            if (ActorManager.GetActorCount() == 0)
+            {
+                if (Gold == 0 && AmazingAIScript.Instance.Gold == 0)
+                {
+                    EndGame();
+                }
+            }
+        }
     }
 
     public void EndGame()
     {
-        _enemySpawner.EndSpawn();
+        AmazingAIScript.Instance.Stop();
         GameState = GameState.End;
 
         InGameUIManager.Instance.GameOverScreen.gameObject.SetActive(true);

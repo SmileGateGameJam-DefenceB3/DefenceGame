@@ -8,6 +8,9 @@ public class ActorManager
 
     public ActorManager()
     {
+        _teamActors.Add(Team.Player, new List<Actor>());
+        _teamActors.Add(Team.CPU, new List<Actor>());
+        
         var actorDataList = Resources.LoadAll("Actors");
         foreach (var data in actorDataList)
         {
@@ -21,17 +24,28 @@ public class ActorManager
 
     public ActorData GetActorData(ActorType type) => _actorDataList[type];
 
-    public Actor CreatePlacingActor(ActorType actorType, Team team, int direction)
+    public int GetActorCount()
+    {
+        int count = 0;
+        foreach (var team in _teamActors.Values)
+        {
+            count += team.Count;
+        }
+
+        return count;
+    }
+    
+    public Actor CreatePlacingActor(ActorType actorType, Team team, int direction, int level = 1)
     {
         var actorData = GetActorData(actorType);
         var actor = Object.Instantiate(actorData.Prefab);
-        actor.Initialize(actorData, team, direction);
+        actor.Initialize(actorData, team, direction, level);
         return actor;
     }
 
-    public Actor SpawnActor(ActorType type, Tile tile, Team team, int direction)
+    public Actor SpawnActor(ActorType type, Tile tile, Team team, int direction, int level = 1)
     {
-        var actor = CreatePlacingActor(type, team, direction);
+        var actor = CreatePlacingActor(type, team, direction, level);
         SpawnActor(actor, tile);
         return actor;
     }
@@ -48,6 +62,11 @@ public class ActorManager
         }
 
         list.Add(actor);
+    }
+
+    public List<Actor> GetActors(Team team)
+    {
+        return _teamActors[team];
     }
 
     public void RemoveActor(Actor actor)

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55a03c9615db1b148a2c6b5ad57fa151, type: 3}
   m_Name: GameSetting
   m_EditorClassIdentifier: 
-  TestEnemyPlace: 1
+  TestEnemyPlace: 0

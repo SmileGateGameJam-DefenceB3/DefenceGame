@@ -17,14 +17,17 @@ public class ActorView : MonoBehaviour
         _spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
     }
 
-    public void OnLevelChanged(int level)
+    public void OnLevelChanged(int level, bool isInitial)
     {
-        _levelUpTween?.Kill();
+        if (!isInitial)
+        {
+            _levelUpTween?.Kill();
 
-        transform.localScale = Vector3.one;
+            transform.localScale = Vector3.one;
 
-        _levelUpTween = transform.DOPunchScale(Vector3.one * 0.25f, 0.75f, 1)
-            .SetEase(Ease.InOutQuad);
+            _levelUpTween = transform.DOPunchScale(Vector3.one * 0.25f, 0.75f, 1)
+                .SetEase(Ease.InOutQuad);
+        }
 
         _helmet.OnLevelChanged(level);
     }
@@ -71,5 +74,13 @@ public class ActorView : MonoBehaviour
         }
 
         await task;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var spriteRenderer in _spriteRenderers)
+        {
+            spriteRenderer.DOKill();
+        }
     }
 }

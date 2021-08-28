@@ -8,14 +8,23 @@ namespace UI
     {
         [SerializeField] private Image _gauge;
         [SerializeField] private TextMeshProUGUI _text;
-
+        [SerializeField] private bool _forPlayer;
+        
         private string _originalString;
         private const string MoneyParameter = "$$";
 
         private void Awake()
         {
             _originalString = _text.text;
-            InGameManager.Instance.OnGoldChanged.AddListener(value => SetValue(value, Constant.Instance.MaxGold));
+
+            if (_forPlayer)
+            {
+                InGameManager.Instance.OnGoldChanged.AddListener(value => SetValue(value, Constant.Instance.MaxGold));
+            }
+            else
+            {
+                AmazingAIScript.Instance.OnGoldChanged.AddListener(value => SetValue(value, AmazingAIScript.Instance.InitialGold));
+            }
         }
 
         public void SetValue(int value, int maxValue)
