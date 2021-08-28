@@ -7,10 +7,7 @@ namespace UI
     public abstract class UIPlaceButton : MonoBehaviour
     {
         [SerializeField] private Button _button;
-        [SerializeField] private Image _border;
-
-        [SerializeField] private Color _normalBorderColor;
-        [SerializeField] private Color _pressedBorderColor;
+        [SerializeField] private Animator _animator;
 
         private List<KeyCode> _keyCodes;
         protected UIPlaceManager _manager;
@@ -28,6 +25,7 @@ namespace UI
 
         public void OnClick()
         {
+            SetPressed(true);
             SoundManager.PlaySfx(ClipType.UIClick);
             OnClickInternal();
         }
@@ -56,7 +54,15 @@ namespace UI
 
         public void SetPressed(bool isPressed)
         {
-            _border.color = isPressed ? _pressedBorderColor : _normalBorderColor;
+            if (isPressed)
+            {
+                _animator.SetTrigger("Pressed");
+            }
+            else
+            {
+                _animator.ResetTrigger("Pressed");
+                _animator.SetTrigger("Normal");
+            }
         }
     }
 }

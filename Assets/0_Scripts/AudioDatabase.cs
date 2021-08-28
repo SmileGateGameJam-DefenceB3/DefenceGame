@@ -11,6 +11,8 @@ public enum ClipType
     Die,
     ItemSpawn,
     LevelUp,
+    TakeHeart,
+    HitPlayer,
 }
 
 [CreateAssetMenu]

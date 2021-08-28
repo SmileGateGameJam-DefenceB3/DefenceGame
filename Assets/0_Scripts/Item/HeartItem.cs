@@ -7,6 +7,7 @@ public class HeartItem : Item
     {
         var Kingdom = InGameManager.Instance.GetKingdom(actor.Team);
         Kingdom.Life = Math.Min(Kingdom.Life + 5, Constant.Instance.MaxHP);
+        SoundManager.PlaySfx(ClipType.TakeHeart);
         Destroy(this.transform.gameObject);
     }
 }

@@ -9139,10 +9139,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2895105961316149284, guid: ad7867ead93b66c47994e95baa74562e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 175
-      objectReference: {fileID: 0}
-    - target: {fileID: 2895105961316149284, guid: ad7867ead93b66c47994e95baa74562e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -9214,17 +9210,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2895105961316149284, guid: ad7867ead93b66c47994e95baa74562e, type: 3}
   m_PrefabInstance: {fileID: 2056414160}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2056414162 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2895105960146566726, guid: ad7867ead93b66c47994e95baa74562e, type: 3}
-  m_PrefabInstance: {fileID: 2056414160}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41f1c5417c9d7ab4b84e531f83f60a4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2056414163 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2895105961316149285, guid: ad7867ead93b66c47994e95baa74562e, type: 3}
@@ -9254,9 +9239,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 2056414164}
-  _border: {fileID: 2056414162}
-  _normalBorderColor: {r: 0.20784314, g: 0.20784314, b: 0.20784314, a: 1}
-  _pressedBorderColor: {r: 0.30980393, g: 0.77254903, b: 0.8509804, a: 1}
+  _animator: {fileID: 2056414166}
+--- !u!95 &2056414166 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 494661896590650131, guid: ad7867ead93b66c47994e95baa74562e, type: 3}
+  m_PrefabInstance: {fileID: 2056414160}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2096385322
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10085,7 +10073,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 20
+  m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0

@@ -171,6 +171,7 @@ public class Actor : MonoBehaviour
 
     private void OnReachEnd()
     {
+        SoundManager.PlaySfx(ClipType.HitPlayer);
         Die(false, false);
     }
 
