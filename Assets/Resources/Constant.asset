@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Constant
   m_EditorClassIdentifier: 
   MapSize: {x: 8, y: 5}
-  TileSize: {x: 1.5, y: 1.5}
+  TileSize: {x: 2, y: 1.25}
   ActorMoveSpeed: 3
