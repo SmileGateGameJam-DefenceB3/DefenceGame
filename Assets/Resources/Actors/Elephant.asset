@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407aad124aee4abc8e7929a91cf5d10e, type: 3}
   m_Name: Elephant
   m_EditorClassIdentifier: 
-  Type: 4
+  Type: 5
   Prefab: {fileID: 175809634478375491, guid: 2b467a4602959de408b3b0bcb391f84d, type: 3}
   Name: "\uCF54\uB07C\uB9AC"
   MaxLevel: 4

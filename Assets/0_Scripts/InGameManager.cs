@@ -15,10 +15,10 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 {
     [SerializeField] private Kingdom _playerKingdom;
     [SerializeField] private Kingdom _cpuKingdom;
-    
+
     public static ActorManager ActorManager => Instance._actorManager;
     private ActorManager _actorManager;
-    
+
     public static TileMap TileMap => Instance._tileMap;
     private TileMap _tileMap;
 
@@ -41,7 +41,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     protected override void Awake()
     {
         base.Awake();
-        
+
         _actorManager = new ActorManager();
         _tileMap = FindObjectOfType(typeof(TileMap)) as TileMap;
         _tileMap.Initialize(true);
@@ -58,7 +58,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
         {
             SoundManager.PlayBGM(ClipType.InGameBGM);
         }
-        
+
         StartGame();
     }
 
@@ -66,7 +66,11 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     {
         Actor.Id = 0;
         GameState = GameState.Playing;
-        AmazingAIScript.Instance.Run();
+
+        if (!GameSetting.Instance.TestEnemyPlace)
+        {
+            AmazingAIScript.Instance.Run();
+        }
     }
 
     private void Update()

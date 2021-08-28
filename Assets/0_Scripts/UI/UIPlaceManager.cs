@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +8,14 @@ namespace UI
 {
     public class UIPlaceManager : MonoBehaviour
     {
+        [Serializable]
+        public class KeyCodes
+        {
+            public List<KeyCode> Codes;
+        }
+
         [SerializeField] private GameObject _food;
+        [SerializeField] private List<KeyCodes> _keyCodes;
 
         private List<UIPlaceButton> _buttons;
         private Actor _placingActor;
@@ -18,7 +26,7 @@ namespace UI
             _buttons = GetComponentsInChildren<UIPlaceButton>().ToList();
             foreach (var button in _buttons)
             {
-                button.Initialize(this);
+                button.Initialize(this, _keyCodes[button.transform.GetSiblingIndex()].Codes);
             }
         }
 
@@ -159,9 +167,14 @@ namespace UI
                         if (hit.collider != null)
                         {
                             var actor = hit.collider.GetComponent<Actor>();
-                            if (actor.Team == Team.Player)
+                            if (actor.Team == Team.Player && actor.CanLevelUp)
                             {
-                                actor.LevelUp();
+                                int cost = actor.Data.Grade * (int) Mathf.Pow(2, actor.Level - 1);
+                                if (InGameManager.Instance.Gold >= cost)
+                                {
+                                    InGameManager.Instance.Gold -= cost;
+                                    actor.LevelUp();
+                                }
                             }
                         }
                     }

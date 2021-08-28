@@ -80,7 +80,7 @@ public class AmazingAIScript : SingletonMonoBehaviour<AmazingAIScript>
                 if (_rabbitRushCount > 0 && Random.Range(0, 1f) < 0.1f)
                 {
                     _rabbitRushCount--;
-                    int rabbitCount = Random.Range(4, 8);
+                    int rabbitCount = Random.Range(6, 9);
                     yield return HorizontalRabbitRush(rabbitCount, GetRandomTile());
                 }
                 else
@@ -107,7 +107,7 @@ public class AmazingAIScript : SingletonMonoBehaviour<AmazingAIScript>
         for (int i = 0; i < count; i++)
         {
             Spawn(ActorType.Rabbit, 1, tile);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
         }
     }
 

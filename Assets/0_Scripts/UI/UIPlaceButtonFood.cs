@@ -4,7 +4,7 @@ namespace UI
 {
     public class UIPlaceButtonFood : UIPlaceButton
     {
-        public override int GetCost() => Constant.Instance.FoodCost;
+        public override int GetCost() => 0;
 
         protected override void OnClickInternal()
         {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -11,12 +12,12 @@ namespace UI
         [SerializeField] private Color _normalBorderColor;
         [SerializeField] private Color _pressedBorderColor;
 
-        private KeyCode _keyCode;
+        private List<KeyCode> _keyCodes;
         protected UIPlaceManager _manager;
 
-        public void Initialize(UIPlaceManager manager)
+        public void Initialize(UIPlaceManager manager, List<KeyCode> keyCodes)
         {
-            _keyCode = KeyCode.Alpha1 + transform.GetSiblingIndex();
+            _keyCodes = keyCodes;
 
             _manager = manager;
             InGameManager.Instance.OnGoldChanged.AddListener(value => { _button.interactable = value >= GetCost(); });
@@ -43,9 +44,13 @@ namespace UI
                 return;
             }
 
-            if (Input.GetKeyDown(_keyCode))
+            foreach (var keyCode in _keyCodes)
             {
-                OnClick();
+                if (Input.GetKeyDown(keyCode))
+                {
+                    OnClick();
+                    return;
+                }
             }
         }
 

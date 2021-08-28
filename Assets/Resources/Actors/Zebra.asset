@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e389399847a554843b5ba3d8d33387bd, type: 3}
-  m_Name: Constant
+  m_Script: {fileID: 11500000, guid: 407aad124aee4abc8e7929a91cf5d10e, type: 3}
+  m_Name: Zebra
   m_EditorClassIdentifier: 
-  MapSize: {x: 8, y: 5}
-  TileSize: {x: 1.7, y: 1.6}
-  ActorMoveSpeed: 1
-  MaxHP: 20
-  MaxGold: 80
-  FoodCost: 0
+  Type: 2
+  Prefab: {fileID: 175809634478375491, guid: 96adb3b77c20f7a41a89cb4dbad67dd7, type: 3}
+  Name: "\uC5BC\uB8E9\uB9D0"
+  MaxLevel: 4
+  Grade: 2
+  Cost: 2
