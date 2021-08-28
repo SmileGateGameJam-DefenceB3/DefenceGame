@@ -166,7 +166,7 @@ public class Actor : MonoBehaviour
     private void OnReachEnd()
     {
         InGameManager.Instance.ActorReachedEnd(this);
-        Die();
+        Die(false);
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -194,18 +194,18 @@ public class Actor : MonoBehaviour
 
         if (Strength == otherActor.Strength)
         {
-            Die();
-            otherActor.Die();
+            Die(true);
+            otherActor.Die(false);
         }
         else if (Strength > otherActor.Strength)
         {
             LevelUp();
-            otherActor.Die();
+            otherActor.Die(true);
         }
         else
         {
             otherActor.LevelUp();
-            Die();
+            Die(true);
         }
 
         return true;
@@ -218,6 +218,7 @@ public class Actor : MonoBehaviour
             return;
         }
 
+        SoundManager.PlaySfx(ClipType.LevelUp);
         SetLevel(Level + 1);
     }
 
@@ -241,8 +242,13 @@ public class Actor : MonoBehaviour
         return true;
     }
 
-    public void Die()
+    public void Die(bool playSound)
     {
+        if (playSound)
+        {
+            SoundManager.PlaySfx(ClipType.Die);
+        }
+        
         InGameManager.ActorManager.RemoveActor(this);
         Destroy(gameObject);
     }

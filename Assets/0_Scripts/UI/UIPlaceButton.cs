@@ -24,8 +24,14 @@ namespace UI
         }
 
         public abstract int GetCost();
-        public abstract void OnClick();
+        protected abstract void OnClickInternal();
 
+        public void OnClick()
+        {
+            SoundManager.PlaySfx(ClipType.UIClick);
+            OnClickInternal();
+        }
+        
         private void Update()
         {
             if (InGameManager.Instance.GameState != GameState.Playing)

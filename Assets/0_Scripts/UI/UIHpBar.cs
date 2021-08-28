@@ -53,8 +53,15 @@ namespace UI
             _runningSequence.onComplete = () =>
             {
                 _isRunning = false;
-                _gauge.fillAmount = _value;
-                _reduceGauge.fillAmount = _value;
+                if (_gauge != null)
+                {
+                    _gauge.fillAmount = _value;
+                }
+
+                if (_reduceGauge != null)
+                {
+                    _reduceGauge.fillAmount = _value;
+                }
             };
         }
     }

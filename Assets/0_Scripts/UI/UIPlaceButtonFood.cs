@@ -6,7 +6,7 @@ namespace UI
     {
         public override int GetCost() => Constant.Instance.FoodCost;
 
-        public override void OnClick()
+        protected override void OnClickInternal()
         {
             _manager.OnClick_FoodButton(this);
         }

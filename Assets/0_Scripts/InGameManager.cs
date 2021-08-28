@@ -39,8 +39,10 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 
     public UnityEvent<int> OnGoldChanged = new UnityEvent<int>();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         _actorManager = new ActorManager();
         _tileMap = FindObjectOfType(typeof(TileMap)) as TileMap;
         _tileMap.Initialize(true);
@@ -52,6 +54,12 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     private void Start()
     {
         Gold = Constant.Instance.MaxGold;
+
+        if (!SoundManager.Instance.AudioSource.isPlaying)
+        {
+            SoundManager.PlayBGM(ClipType.InGameBGM);
+        }
+        
         StartGame();
     }
 

@@ -10,7 +10,7 @@ namespace UI
 
         public override int GetCost() => InGameManager.ActorManager.GetActorData(ActorType).Cost;
 
-        public override void OnClick()
+        protected override void OnClickInternal()
         {
             _manager.OnClick_ActorButton(this);
         }
