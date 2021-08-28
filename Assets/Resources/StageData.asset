@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c43a7bdc162c9644b35da765f1582bf, type: 3}
+  m_Name: StageData
+  m_EditorClassIdentifier: 
+  Stages:
+  - PlayerGold: 80
+    CPUGold: 90
+    MinCPUSpawnDelay: 3
+    MaxCPUSpawnDelay: 5
+    IsHard: 0
+    Factor: 0
+  - PlayerGold: 100
+    CPUGold: 150
+    MinCPUSpawnDelay: 2
+    MaxCPUSpawnDelay: 3
+    IsHard: 1
+    Factor: 1

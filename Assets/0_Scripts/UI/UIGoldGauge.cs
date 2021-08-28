@@ -23,7 +23,7 @@ namespace UI
             }
             else
             {
-                AmazingAIScript.Instance.OnGoldChanged.AddListener(value => SetValue(value, AmazingAIScript.Instance.InitialGold));
+                AmazingAIScript.Instance.OnGoldChanged.AddListener(value => SetValue(value, AmazingAIScript.MaxGold));
             }
         }
 

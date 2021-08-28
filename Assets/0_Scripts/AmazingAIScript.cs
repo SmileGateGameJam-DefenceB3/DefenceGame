@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,29 +8,27 @@ using Random = UnityEngine.Random;
 
 public class AmazingAIScript : SingletonMonoBehaviour<AmazingAIScript>
 {
-    [SerializeField] private int _initialGold;
-    [SerializeField] private float _minSpawnDelay = 2f;
-    [SerializeField] private float _maxSpawnDelay = 3f;
-    
     private readonly List<Tile> _availableTiles = new List<Tile>();
     private float _nextSpawnTime;
     private readonly Queue<Tile> _actQueue = new Queue<Tile>();
 
+    private StageData.Stage _stage;
     private int _rabbitRushCount = 2;
 
-    public int InitialGold => _initialGold;
-    
+    public const int MaxGold = 150;
+
     private int _gold;
+
     public int Gold
     {
         get => _gold;
         set
         {
-            _gold = Mathf.Clamp(value, 0, InitialGold);
+            _gold = Mathf.Clamp(value, 0, MaxGold);
             OnGoldChanged?.Invoke(_gold);
         }
     }
-    
+
     public UnityEvent<int> OnGoldChanged = new UnityEvent<int>();
 
     public void OnPlayerSpawned(Tile tile, Actor actor)
@@ -48,7 +47,8 @@ public class AmazingAIScript : SingletonMonoBehaviour<AmazingAIScript>
             }
         }
 
-        Gold = InitialGold;
+        _stage = InGameManager.Instance.CurrentStage;
+        Gold = _stage.CPUGold;
     }
 
     public void Run()
@@ -60,6 +60,29 @@ public class AmazingAIScript : SingletonMonoBehaviour<AmazingAIScript>
     {
         StopCoroutine(nameof(RunCo));
     }
+
+    private bool did;
+
+    private void Update()
+    {
+        if (did || !_stage.IsHard)
+        {
+            return;
+        }
+
+        if (InGameManager.Instance.GetKingdom(Team.CPU).Life <= 12)
+        {
+            did = true;
+            SpawnRandom(InGameManager.TileMap[Random.Range(6, 8), 0], Random.Range(1, 4));
+            SpawnRandom(InGameManager.TileMap[Random.Range(6, 8), 1], Random.Range(1, 4));
+            SpawnRandom(InGameManager.TileMap[Random.Range(6, 8), 2], Random.Range(1, 4));
+            SpawnRandom(InGameManager.TileMap[Random.Range(6, 8), 3], Random.Range(1, 4));
+            SpawnRandom(InGameManager.TileMap[Random.Range(6, 8), 4], Random.Range(1, 4));
+        }
+    }
+
+    readonly Dictionary<int, int> cpuDict = new Dictionary<int, int>();
+    readonly Dictionary<int, int> playerDict = new Dictionary<int, int>();
 
     private IEnumerator RunCo()
     {
@@ -75,25 +98,82 @@ public class AmazingAIScript : SingletonMonoBehaviour<AmazingAIScript>
 
             if (Time.time > _nextSpawnTime)
             {
-                _nextSpawnTime = Time.time + Random.Range(_minSpawnDelay, _maxSpawnDelay);
+                _nextSpawnTime = Time.time + Random.Range(_stage.MinCPUSpawnDelay, _stage.MaxCPUSpawnDelay);
 
                 if (_rabbitRushCount > 0 && Random.Range(0, 1f) < 0.1f)
                 {
                     _rabbitRushCount--;
-                    int rabbitCount = Random.Range(6, 9);
+                    int rabbitCount = Random.Range(6, 9) + _stage.Factor * 5;
                     yield return HorizontalRabbitRush(rabbitCount, GetRandomTile());
                 }
                 else
                 {
-                    var defenceTile = GetDefenceTile();
-                    if (defenceTile == null || Random.Range(0, 1f) < 0.05f)
+                    if (_stage.IsHard)
                     {
-                        SpawnRandom(GetRandomTile(), GetRandomLevel(30, 30, 20, 5));
+                        void Fill(Dictionary<int, int> target, List<Actor> actors)
+                        {
+                            target.Clear();
+                            foreach (var actor in actors)
+                            {
+                                if (!target.TryGetValue(actor.Y, out var oldValue) || actor.Strength > oldValue)
+                                {
+                                    target[actor.Y] = actor.Strength;
+                                }
+                            }
+                        }
+
+                        Fill(cpuDict, InGameManager.ActorManager.GetActors(Team.CPU));
+                        Fill(playerDict, InGameManager.ActorManager.GetActors(Team.Player));
+
+                        foreach (var cpu in cpuDict)
+                        {
+                            if (playerDict.TryGetValue(cpu.Key, out var playerStrength))
+                            {
+                                if (playerStrength <= cpu.Value)
+                                {
+                                    playerDict.Remove(cpu.Key);
+                                }
+                            }
+                        }
+
+                        if (playerDict.Count == 0)
+                        {
+                            int level = GetRandomLevel(80, 13, 4, 3 + _stage.Factor * 5);
+                            SpawnRandom(GetRandomTile(), level);
+                        }
+                        else
+                        {
+                            var target = playerDict.First();
+                            foreach (var pair in playerDict)
+                            {
+                                if (pair.Value > target.Value)
+                                {
+                                    target = pair;
+                                }
+                            }
+
+                            int y = target.Key;
+                            int strength = target.Value;
+
+                            int level = strength / 10;
+                            int grade = (strength - level * 10) + 1;
+
+                            grade = Mathf.Clamp(grade, (int) ActorType.Rabbit, (int) ActorType.Elephant);
+                            Spawn((ActorType) grade, level, InGameManager.TileMap[7, y]);
+                        }
                     }
                     else
                     {
-                        int level = GetRandomLevel(80, 13, 4, 3);
-                        SpawnRandom(defenceTile, level);
+                        var defenceTile = GetDefenceTile();
+                        if (defenceTile == null || Random.Range(0, 1f) < 0.05f)
+                        {
+                            SpawnRandom(GetRandomTile(), GetRandomLevel(30, 30, 20 + _stage.Factor * 10, 5 + _stage.Factor * 10));
+                        }
+                        else
+                        {
+                            int level = GetRandomLevel(80, 13, 4, 3 + _stage.Factor * 5);
+                            SpawnRandom(defenceTile, level);
+                        }
                     }
                 }
             }
@@ -131,12 +211,12 @@ public class AmazingAIScript : SingletonMonoBehaviour<AmazingAIScript>
 
         return 4;
     }
-    
+
     private Tile GetRandomTile()
     {
         return _availableTiles[Random.Range(0, _availableTiles.Count)];
     }
-    
+
     private Tile GetDefenceTile()
     {
         var covered = new HashSet<int>();

@@ -11,5 +11,4 @@ public class Constant : SingletonScriptableObject<Constant>
     public float ActorMoveSpeed;
     public int MaxHP;
     public int MaxGold;
-    public int FoodCost;
 }
