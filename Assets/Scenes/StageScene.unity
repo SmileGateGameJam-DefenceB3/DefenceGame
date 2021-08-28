@@ -323,7 +323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6571217}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.84, y: -3.07, z: 0}
+  m_LocalPosition: {x: -4, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1918701449}
@@ -2598,7 +2598,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03cb8553c79cb240b90e5d1e6768801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnTime: 4
+  respawnTime: 2
+  healthItem: {fileID: 1296038963402276603, guid: 28e3405118925b3478ecfaf48af9982c, type: 3}
+  levelUpItem: {fileID: 3181980908367313744, guid: 532175148cf942f4dbdb688d1dc4d0d2, type: 3}
 --- !u!1 &1097497970
 GameObject:
   m_ObjectHideFlags: 0
