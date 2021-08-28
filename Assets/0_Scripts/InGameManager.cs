@@ -29,6 +29,9 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
         _actorManager = new ActorManager();
         _tileMap = FindObjectOfType(typeof(TileMap)) as TileMap;
         _tileMap.Initialize(true);
+
+        _playerKingdom.Initialize();
+        _cpuKingdom.Initialize();
     }
 
     private void Start()

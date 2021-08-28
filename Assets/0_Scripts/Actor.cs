@@ -18,8 +18,8 @@ public class Actor : MonoBehaviour
     public ActorView View => _view;
 
     public float Progress;
-    public int Damage { get; private set; }
-    public int Power { get; private set; }
+    public int Strength => Level * 10 + Data.Grade;
+    public int Damage => Data.Grade + Level - 1;
     public int Level { get; private set; }
     public Team Team { get; private set; }
     public float MoveSpeed { get; set; }
@@ -38,8 +38,6 @@ public class Actor : MonoBehaviour
     public void SetLevel(int level, bool isInitial = false)
     {
         Level = level;
-        Power = Data.BasePower + (Level - 1) * Data.PowerPerLevel;
-
         if (!isInitial)
         {
             View.OnLevelChanged(Level);
@@ -189,12 +187,12 @@ public class Actor : MonoBehaviour
             return true;
         }
 
-        if (Power == otherActor.Power)
+        if (Strength == otherActor.Strength)
         {
             Die();
             otherActor.Die();
         }
-        else if (Power > otherActor.Power)
+        else if (Strength > otherActor.Strength)
         {
             LevelUp();
             otherActor.Die();
