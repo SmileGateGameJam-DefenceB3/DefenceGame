@@ -126,7 +126,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2895105961217941471
 CanvasRenderer:
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD1A0\uB07C \uC18C\uD658 $1"
+  m_text: "\uCF54\uB07C\uB9AC \uC18C\uD658 $1"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01f3d5af9f643844ea911ea68c722136, type: 2}
   m_sharedMaterial: {fileID: -5971283975291737700, guid: 01f3d5af9f643844ea911ea68c722136, type: 2}
@@ -265,7 +265,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 80}
+  m_SizeDelta: {x: 275, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2895105961316149281
 CanvasRenderer:
@@ -394,3 +394,4 @@ MonoBehaviour:
   _normalBorderColor: {r: 0.20784315, g: 0.20784315, b: 0.20784315, a: 1}
   _pressedBorderColor: {r: 0.30980393, g: 0.77254903, b: 0.8509804, a: 1}
   _actorType: 1
+  _priceText: {fileID: 2895105961217941440}
