@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public class HeartItem : Item
 {
@@ -8,7 +6,7 @@ public class HeartItem : Item
     public override void Func(Actor actor)
     {
         var Kingdom = InGameManager.Instance.GetKingdom(actor.Team);
-        Kingdom.Life += value;
+        Kingdom.Life = Math.Min(Kingdom.Life + 5, Constant.Instance.MaxHP);
         Destroy(this.transform.gameObject);
     }
 }
