@@ -52,11 +52,13 @@ public class Actor : MonoBehaviour
     public void SetDirection(int direction)
     {
         _direction = direction;
+        View.transform.localRotation = direction == -1 ? Quaternion.identity : Quaternion.Euler(0, 180f, 0);
     }
 
     public void Activate()
     {
         _collider.enabled = true;
+        View.Activate();
         StartMoveToNextTile();
     }
 
@@ -139,7 +141,7 @@ public class Actor : MonoBehaviour
                 {
                     return false;
                 }
-                
+
                 float currentX = transform.position.x;
                 currentX += _direction * MoveSpeed * Time.deltaTime;
 
@@ -165,8 +167,7 @@ public class Actor : MonoBehaviour
 
     private void OnReachEnd()
     {
-        InGameManager.Instance.ActorReachedEnd(this);
-        Die(false);
+        Die(false, false);
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -194,18 +195,18 @@ public class Actor : MonoBehaviour
 
         if (Strength == otherActor.Strength)
         {
-            Die(true);
-            otherActor.Die(false);
+            Die();
+            otherActor.Die(true, false);
         }
         else if (Strength > otherActor.Strength)
         {
             LevelUp();
-            otherActor.Die(true);
+            otherActor.Die();
         }
         else
         {
             otherActor.LevelUp();
-            Die(true);
+            Die();
         }
 
         return true;
@@ -241,14 +242,29 @@ public class Actor : MonoBehaviour
         return true;
     }
 
-    public void Die(bool playSound)
+    public async void Die(bool playAnimation = true, bool playSound = true)
     {
         if (playSound)
         {
             SoundManager.PlaySfx(ClipType.Die);
         }
-        
+
         InGameManager.ActorManager.RemoveActor(this);
+        _collider.enabled = false;
+        StopCoroutine(nameof(MoveToNextTileCo));
+
+        if (playAnimation)
+        {
+            await View.Die();
+        }
+        else
+        {
+            await View.Attack();
+            // xd
+            InGameManager.Instance.ActorReachedEnd(this);
+            await View.FadeOut();
+        }
+
         Destroy(gameObject);
     }
 }

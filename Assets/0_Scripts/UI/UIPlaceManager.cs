@@ -44,8 +44,6 @@ namespace UI
 
         public void PlaceActor(Tile tile)
         {
-            _placingActor.View.SpriteRenderer.sortingOrder = Constant.ActorSortingOrder;
-
             if (IsEnemyArea(tile))
             {
                 if (!GameSetting.Instance.TestEnemyPlace)
@@ -77,8 +75,6 @@ namespace UI
 
         private IEnumerator PlaceActorCo()
         {
-            _placingActor.View.SpriteRenderer.sortingOrder = Constant.PlacingActorSortingOrder;
-
             bool isFirstFrame = true;
             while (true)
             {

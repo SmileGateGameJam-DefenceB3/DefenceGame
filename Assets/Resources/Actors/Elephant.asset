@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 407aad124aee4abc8e7929a91cf5d10e, type: 3}
-  m_Name: Dog
+  m_Name: Elephant
   m_EditorClassIdentifier: 
-  Type: 2
+  Type: 4
   Prefab: {fileID: 175809634478375491, guid: 2b467a4602959de408b3b0bcb391f84d, type: 3}
   Name: 
   MaxLevel: 4
-  Grade: 2
+  Grade: 5
+  Cost: 5

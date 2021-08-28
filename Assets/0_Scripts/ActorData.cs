@@ -4,8 +4,9 @@ public enum ActorType
 {
     None,
     Rabbit,
-    Dog,
     Leopard,
+    Lion,
+    Elephant,
 }
 
 [CreateAssetMenu]
