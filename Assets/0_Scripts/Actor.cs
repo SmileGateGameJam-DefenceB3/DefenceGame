@@ -228,7 +228,6 @@ public class Actor : MonoBehaviour
 
     public void LevelUp()
     {
-        Debug.Log("UP");
         if (!CanLevelUp)
         {
             return;
@@ -244,10 +243,10 @@ public class Actor : MonoBehaviour
         if (item == null)
             return;
 
-        other.enabled = false;
         if (other.enabled)
         {
             item.Func(this);
+            other.enabled = false;
         }
     }
 

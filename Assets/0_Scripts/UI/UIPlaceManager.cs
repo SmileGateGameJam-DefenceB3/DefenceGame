@@ -13,10 +13,10 @@ namespace UI
         {
             public List<KeyCode> Codes;
         }
-        
+
         [SerializeField] private GameObject _food;
         [SerializeField] private List<KeyCodes> _keyCodes;
-        
+
         private List<UIPlaceButton> _buttons;
         private Actor _placingActor;
         private UIPlaceButton _currentButton;
@@ -167,9 +167,14 @@ namespace UI
                         if (hit.collider != null)
                         {
                             var actor = hit.collider.GetComponent<Actor>();
-                            if (actor.Team == Team.Player)
+                            if (actor.Team == Team.Player && actor.CanLevelUp)
                             {
-                                actor.LevelUp();
+                                int cost = actor.Data.Grade * (int) Mathf.Pow(2, actor.Level - 1);
+                                if (InGameManager.Instance.Gold >= cost)
+                                {
+                                    InGameManager.Instance.Gold -= cost;
+                                    actor.LevelUp();
+                                }
                             }
                         }
                     }
