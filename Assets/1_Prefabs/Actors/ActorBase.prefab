@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1767694605325350271}
   - component: {fileID: 5873827829825073020}
   - component: {fileID: 7232661783437442559}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ActorBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 5873827829825073020}
   _view: {fileID: 9030415725323723112}
+  Progress: 0
 --- !u!61 &5873827829825073020
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -106,7 +107,7 @@ GameObject:
   - component: {fileID: 1767694606154063862}
   - component: {fileID: 1767694606154063865}
   - component: {fileID: 9030415725323723112}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}

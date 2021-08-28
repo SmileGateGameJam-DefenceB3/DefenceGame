@@ -1,12 +1,13 @@
 ﻿using System.Collections;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
     [SerializeField] private Collider2D _collider;
     [SerializeField] private ActorView _view;
+
+    private Tile _laneBeginTile;
+    private Tile _targetTile;
 
     private Tile _currentTile;
     private Tile _nextTile;
@@ -16,24 +17,32 @@ public class Actor : MonoBehaviour
     public ActorData Data { get; private set; }
     public ActorView View => _view;
 
+    public float Progress;
     public int Power { get; private set; }
     public int Level { get; private set; }
     public Team Team { get; private set; }
     public float MoveSpeed { get; set; }
 
+    public bool CanLevelUp => Level < Data.MaxLevel;
+
     public void Initialize(ActorData data, Team team, int direction)
     {
         Data = data;
         MoveSpeed = Constant.Instance.ActorMoveSpeed;
-        SetLevel(1);
+        SetLevel(1, true);
         SetTeam(team);
         SetDirection(direction);
     }
 
-    public void SetLevel(int level)
+    public void SetLevel(int level, bool isInitial = false)
     {
         Level = level;
-        Power = Data.BasePower + (level - 1) * Data.PowerPerLevel;
+        Power = Data.BasePower + (Level - 1) * Data.PowerPerLevel;
+
+        if (!isInitial)
+        {
+            View.OnLevelChanged(Level);
+        }
     }
 
     public void SetTeam(Team team)
@@ -68,6 +77,28 @@ public class Actor : MonoBehaviour
 
     private IEnumerator MoveToNextTileCo()
     {
+        var cursor = _currentTile;
+        while (true)
+        {
+            _targetTile = cursor;
+            cursor = cursor.GetAdjacent(_direction, 0);
+            if (cursor == null)
+            {
+                break;
+            }
+        }
+
+        cursor = _currentTile;
+        while (true)
+        {
+            _laneBeginTile = cursor;
+            cursor = cursor.GetAdjacent(-_direction, 0);
+            if (cursor == null)
+            {
+                break;
+            }
+        }
+
         while (true)
         {
             _nextTile = _currentTile.GetAdjacent(_direction, 0);
@@ -121,6 +152,8 @@ public class Actor : MonoBehaviour
                 position.x = currentX;
                 transform.position = position;
 
+                Progress = Mathf.InverseLerp(_laneBeginTile.transform.position.x, _targetTile.transform.position.x, position.x);
+
                 return currentX == targetX;
             }
         }
@@ -128,9 +161,11 @@ public class Actor : MonoBehaviour
 
     private void OnReachEnd()
     {
+        //
+        Die();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (CheckActorCollide(other))
         {
@@ -143,9 +178,14 @@ public class Actor : MonoBehaviour
     private bool CheckActorCollide(Collider2D other)
     {
         var otherActor = other.GetComponent<Actor>();
-        if (otherActor == null || otherActor.Team == Team)
+        if (otherActor == null)
         {
             return false;
+        }
+
+        if (otherActor.Team == Team)
+        {
+            return true;
         }
 
         if (Power == otherActor.Power)
@@ -167,23 +207,14 @@ public class Actor : MonoBehaviour
         return true;
     }
 
-    private Tween _levelUpTween;
     public void LevelUp()
     {
-        if (Level < Data.MaxLevel)
+        if (!CanLevelUp)
         {
-            SetLevel(Level + 1);
+            return;
         }
 
-        if (_levelUpTween != null && !_levelUpTween.IsComplete())
-        {
-            _levelUpTween.Kill();
-        }
-
-        View.transform.localScale = Vector3.one;
-
-        _levelUpTween = View.transform.DOPunchScale(Vector3.one * 0.25f, 0.75f, 1)
-            .SetEase(Ease.InOutQuad);
+        SetLevel(Level + 1);
     }
 
     private void CheckItemCollide(Collider2D other)

@@ -3,25 +3,19 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UIActorPlaceButton : MonoBehaviour
+    public abstract class UIPlaceButton : MonoBehaviour
     {
         [SerializeField] private Button _button;
         [SerializeField] private KeyCode _keyCode;
-        [SerializeField] private ActorType _actorType;
         
-        private UIActorPlaceManager _manager;
+        protected UIPlaceManager _manager;
 
-        public ActorType ActorType => _actorType;
-        
-        public void Initialize(UIActorPlaceManager manager)
+        public void Initialize(UIPlaceManager manager)
         {
             _manager = manager;
         }
 
-        public void OnClick()
-        {
-            _manager.OnClick_ActorButton(this);
-        }
+        public abstract void OnClick();
 
         private void Update()
         {

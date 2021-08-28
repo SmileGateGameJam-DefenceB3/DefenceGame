@@ -5,35 +5,36 @@ using UnityEngine;
 
 namespace UI
 {
-    public class UIActorPlaceManager : MonoBehaviour
+    public class UIPlaceManager : MonoBehaviour
     {
-        private List<UIActorPlaceButton> _buttons;
+        private List<UIPlaceButton> _buttons;
         private Actor _placingActor;
 
         private void Awake()
         {
-            _buttons = GetComponentsInChildren<UIActorPlaceButton>().ToList();
+            _buttons = GetComponentsInChildren<UIPlaceButton>().ToList();
             foreach (var button in _buttons)
             {
                 button.Initialize(this);
             }
         }
 
-        public void OnClick_ActorButton(UIActorPlaceButton button)
+        public void OnClick_ActorButton(UIPlaceButtonActor actorButton)
         {
-            foreach (var button0 in _buttons)
-            {
-                button0.SetPressed(false);
-            }
+            StopPlacing();
+            StartPlacingActor(actorButton.ActorType);
+            actorButton.SetPressed(true);
+        }
 
-            button.SetPressed(true);
-            StartPlacingActor(button.ActorType);
+        public void OnClick_FoodButton(UIPlaceButtonFood foodButton)
+        {
+            StopPlacing();
+            StartCoroutine(nameof(StartFeeding));
+            foodButton.SetPressed(true);
         }
 
         public void StartPlacingActor(ActorType actorType)
         {
-            StopPlacingActor();
-
             _placingActor = InGameManager.ActorManager.CreatePlacingActor(actorType, Team.Player, 1);
             StartCoroutine(nameof(PlaceActorCo));
         }
@@ -42,11 +43,11 @@ namespace UI
         {
             _placingActor.View.SpriteRenderer.sortingOrder = Constant.ActorSortingOrder;
 
-            if (tile.Coord.x >= Constant.Instance.MapSize.x / 2)
+            if (IsEnemyArea(tile))
             {
                 if (!GameSetting.Instance.TestEnemyPlace)
                 {
-                    StopPlacingActor();
+                    StopPlacing();
                     return;
                 }
 
@@ -57,7 +58,12 @@ namespace UI
             InGameManager.ActorManager.SpawnActor(_placingActor, tile);
 
             _placingActor = null;
-            StopPlacingActor();
+            StopPlacing();
+        }
+
+        private bool IsEnemyArea(Tile tile)
+        {
+            return tile.Coord.x >= Constant.Instance.MapSize.x / 2;
         }
 
         private IEnumerator PlaceActorCo()
@@ -85,7 +91,7 @@ namespace UI
                     }
                     else
                     {
-                        StopPlacingActor();
+                        StopPlacing();
                     }
 
                     yield break;
@@ -93,7 +99,7 @@ namespace UI
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    StopPlacingActor();
+                    StopPlacing();
                     yield break;
                 }
 
@@ -102,7 +108,7 @@ namespace UI
             }
         }
 
-        public void StopPlacingActor()
+        public void StopPlacing()
         {
             foreach (var button in _buttons)
             {
@@ -110,9 +116,44 @@ namespace UI
             }
 
             StopCoroutine(nameof(PlaceActorCo));
+            StopCoroutine(nameof(StartFeeding));
             if (_placingActor != null)
             {
                 Destroy(_placingActor.gameObject);
+            }
+        }
+
+        public void StartFeeding()
+        {
+            StartCoroutine(nameof(FeedingCo));
+        }
+
+        private IEnumerator FeedingCo()
+        {
+            while (true)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (!IsEnemyArea(InputManager.Instance.CurrentHoveredTile))
+                    {
+                        var worldPosition = InGameUIManager.Instance.Camera.ScreenToWorldPoint(Input.mousePosition);
+                        worldPosition.z = 0;
+                        var hit = Physics2D.Raycast(worldPosition, Vector2.up, 0.01f, 1 << LayerMask.NameToLayer("Actor"));
+                        if (hit.collider != null)
+                        {
+                            var actor = hit.collider.GetComponent<Actor>();
+                            if (actor.Team == Team.Player)
+                            {
+                                actor.LevelUp();
+                            }
+                        }
+                    }
+
+                    StopPlacing();
+                    yield break;
+                }
+
+                yield return null;
             }
         }
     }

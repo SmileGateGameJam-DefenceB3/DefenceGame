@@ -2,7 +2,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-public class TileMap : MonoBehaviour
+public class TileMap : SingletonMonoBehaviour<TileMap>
 {
     public Vector2Int Size { get; private set; }
     private Tile[,] _tiles;
