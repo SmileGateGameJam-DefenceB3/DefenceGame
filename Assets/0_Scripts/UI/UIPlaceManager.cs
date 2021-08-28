@@ -121,7 +121,7 @@ namespace UI
             }
 
             StopCoroutine(nameof(PlaceActorCo));
-            StopCoroutine(nameof(StartFeeding));
+            StopCoroutine(nameof(FeedingCo));
             if (_placingActor != null)
             {
                 Destroy(_placingActor.gameObject);
