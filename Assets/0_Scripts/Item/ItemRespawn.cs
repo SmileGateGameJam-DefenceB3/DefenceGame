@@ -29,7 +29,6 @@ public class ItemRespawn : MonoBehaviour
                 itemPrefab = healthItem;
             else
                 itemPrefab = levelUpItem;
-            Debug.Log("아이템 생성!!  이전 딜레이: [" + randX + ", " + randY + "]");
 
             //get tile position
             Vector3 tile = tileMap[randX, randY].transform.position;
@@ -39,8 +38,14 @@ public class ItemRespawn : MonoBehaviour
                 continue;
             var obj = Instantiate(itemPrefab, new Vector3(tile.x, tile.y + 0.1f,
                 0), Quaternion.identity);
-            obj.transform.localScale = new Vector2(0.0f, 0.0f);
-            Debug.Log(obj.name);
+            var objViewImage = obj.transform.Find("ViewImage").gameObject;
+            objViewImage.transform.localScale = new Vector2(0.0f, 0.0f);
+
+            if (type != 0)
+            {
+                int angler = Random.Range(0, 2);
+                objViewImage.transform.rotation = (angler == 0) ? Quaternion.Euler(0, 0, 18) : Quaternion.Euler(0, 0, -18);
+            }
             
         }
     }

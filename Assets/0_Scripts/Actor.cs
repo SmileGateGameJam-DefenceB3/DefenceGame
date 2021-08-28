@@ -225,14 +225,8 @@ public class Actor : MonoBehaviour
     {
         var item = other.GetComponent<Item>();
         if (item == null)
-        {
             return;
-        }
-
-        if (CanTakeItem(item))
-        {
-            item.DestroySelf();
-        }
+        item.Func(this);
     }
 
     private bool CanTakeItem(Item item)

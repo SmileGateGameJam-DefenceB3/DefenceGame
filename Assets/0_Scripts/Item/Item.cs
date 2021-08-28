@@ -7,27 +7,20 @@ public abstract class Item : MonoBehaviour
 {
     [SerializeField] protected Collider2D _collider;
     [SerializeField] protected ItemView _view;
-
+    [SerializeField] private Vector3 scale = new Vector3();
     Vector3 oriPos;
-    public void DestroySelf()
-    {
-        _collider.enabled = false;
-        Destroy(gameObject);
-    }
+    public abstract void Func(Actor actor);
 
     private void Awake()
     {
         oriPos = transform.position;
-        Debug.Log("!!CREATE!!");
         StartCoroutine(AwakeEffectCo());
     }
     IEnumerator AwakeEffectCo()
     {
-        transform.DOScale(new Vector3(0.2f, 0.2f, 1f), 0.8f).SetEase(Ease.OutBounce);
+        GameObject viewImage = transform.Find("ViewImage").gameObject;
+        viewImage.transform.DOScale(scale, 0.8f).SetEase(Ease.OutBounce);
         yield return new WaitForSeconds(0.8f);
-        transform.DOMoveY(oriPos.y + 0.075f, 1.0f, false).SetLoops(-1, LoopType.Yoyo);
-    }
-    private void Update()
-    {
+        viewImage.transform.DOMoveY(oriPos.y + 0.075f, 1.0f, false).SetLoops(-1, LoopType.Yoyo);
     }
 }
