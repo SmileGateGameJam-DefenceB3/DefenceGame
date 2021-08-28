@@ -7,10 +7,12 @@ namespace UI
 {
     public class UIPlaceManager : MonoBehaviour
     {
+        [SerializeField] private GameObject _food;
+        
         private List<UIPlaceButton> _buttons;
         private Actor _placingActor;
         private UIPlaceButton _currentButton;
-
+        
         private void Awake()
         {
             _buttons = GetComponentsInChildren<UIPlaceButton>().ToList();
@@ -129,11 +131,14 @@ namespace UI
                 Destroy(_placingActor.gameObject);
             }
 
+            _food.SetActive(false);
+
             _currentButton = null;
         }
 
         public void StartFeeding()
         {
+            _food.SetActive(true);
             StartCoroutine(nameof(FeedingCo));
         }
 
@@ -141,12 +146,14 @@ namespace UI
         {
             while (true)
             {
+                var worldPosition = InGameUIManager.Instance.Camera.ScreenToWorldPoint(Input.mousePosition);
+                worldPosition.z = 0;
+                _food.transform.position = worldPosition;
+                
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (!IsEnemyArea(InputManager.Instance.CurrentHoveredTile))
                     {
-                        var worldPosition = InGameUIManager.Instance.Camera.ScreenToWorldPoint(Input.mousePosition);
-                        worldPosition.z = 0;
                         var hit = Physics2D.Raycast(worldPosition, Vector2.up, 0.01f, 1 << LayerMask.NameToLayer("Actor"));
                         if (hit.collider != null)
                         {

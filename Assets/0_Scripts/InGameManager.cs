@@ -65,6 +65,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 
     public void StartGame()
     {
+        Actor.Id = 0;
         GameState = GameState.Playing;
         _enemySpawner.StartSpawn();
     }

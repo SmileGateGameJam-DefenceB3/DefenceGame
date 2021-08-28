@@ -12,9 +12,9 @@ public class ItemRespawn : MonoBehaviour
     {
         StartCoroutine(RespawnItemCo());
     }
+
     IEnumerator RespawnItemCo()
     {
-        
         var tileMap = FindObjectOfType(typeof(TileMap)) as TileMap;
         while (true)
         {
@@ -33,9 +33,11 @@ public class ItemRespawn : MonoBehaviour
             //get tile position
             Vector3 tile = tileMap[randX, randY].transform.position;
 
-            //º¹Á¦
+            //ï¿½ï¿½ï¿½ï¿½
             if (itemPrefab is null)
                 continue;
+
+            SoundManager.PlaySfx(ClipType.ItemSpawn);
             var obj = Instantiate(itemPrefab, new Vector3(tile.x, tile.y + 0.1f,
                 0), Quaternion.identity);
             var objViewImage = obj.transform.Find("ViewImage").gameObject;
@@ -49,7 +51,6 @@ public class ItemRespawn : MonoBehaviour
                 int angler = Random.Range(0, 2);
                 objViewImage.transform.rotation = (angler == 0) ? Quaternion.Euler(0, 0, 18) : Quaternion.Euler(0, 0, -18);
             }
-            
         }
     }
 }

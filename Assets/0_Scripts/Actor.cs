@@ -27,8 +27,9 @@ public class Actor : MonoBehaviour
 
     public bool CanLevelUp => Level < Data.MaxLevel;
 
-    private static int Id;
-
+    public static int Id;
+    public int ActorId;
+    
     public void Initialize(ActorData data, Team team, int direction)
     {
         Data = data;
@@ -37,7 +38,8 @@ public class Actor : MonoBehaviour
         SetTeam(team);
         SetDirection(direction);
 
-        View.transform.position += new Vector3(0, 0, -0.02f * ++Id);
+        ActorId = Id++;
+        View.AdjustSortingOrders(ActorId * 5);
     }
 
     public void SetLevel(int level, bool isInitial = false)
@@ -216,7 +218,7 @@ public class Actor : MonoBehaviour
 
         return true;
     }
-
+    
     public void LevelUp()
     {
         if (!CanLevelUp)
@@ -248,6 +250,7 @@ public class Actor : MonoBehaviour
             SoundManager.PlaySfx(ClipType.Die);
         }
 
+        View.AdjustSortingOrders(-ActorId * 5);
         InGameManager.ActorManager.RemoveActor(this);
         _collider.enabled = false;
         StopCoroutine(nameof(MoveToNextTileCo));

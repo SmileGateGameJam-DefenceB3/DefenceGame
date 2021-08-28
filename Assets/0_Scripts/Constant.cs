@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Constant : SingletonScriptableObject<Constant>
 {
-    public static int PlacingOrder = 100;
+    public static int PlacingOrder = 10000;
         
     public Vector2Int MapSize;
     public Vector2 TileSize;
