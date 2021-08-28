@@ -19,7 +19,7 @@ namespace UI
 
         private void Update()
         {
-            if (InGameManager.Instance.GameState == GameState.End)
+            if (InGameManager.Instance.GameState != GameState.Playing)
             {
                 return;
             }

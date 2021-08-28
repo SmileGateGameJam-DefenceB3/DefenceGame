@@ -1,6 +1,4 @@
-﻿using System;
-using Common;
-using System.Collections;
+﻿using Common;
 using UI;
 using UnityEngine;
 
@@ -19,11 +17,23 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     
     public static ActorManager ActorManager => Instance._actorManager;
     private ActorManager _actorManager;
-
+    
     public static TileMap TileMap => Instance._tileMap;
     private TileMap _tileMap;
 
     public GameState GameState { get; private set; }
+
+    private int _gold;
+
+    private int Gold
+    {
+        get => _gold;
+        set
+        {
+            _gold = value;
+            InGameUIManager.Instance.GoldUI.SetValue(value, Constant.Instance.MaxGold);
+        }
+    }
 
     private void Awake()
     {
@@ -37,6 +47,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 
     private void Start()
     {
+        Gold = Constant.Instance.MaxGold;
         StartGame();
     }
 

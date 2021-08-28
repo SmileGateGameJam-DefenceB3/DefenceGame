@@ -16,3 +16,4 @@ MonoBehaviour:
   TileSize: {x: 1.7, y: 1.6}
   ActorMoveSpeed: 2
   MaxHP: 20
+  MaxGold: 50

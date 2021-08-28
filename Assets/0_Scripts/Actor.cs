@@ -135,7 +135,7 @@ public class Actor : MonoBehaviour
 
             bool MoveStepTo(float targetX)
             {
-                if (InGameManager.Instance.GameState == GameState.End)
+                if (InGameManager.Instance.GameState != GameState.Playing)
                 {
                     return false;
                 }
