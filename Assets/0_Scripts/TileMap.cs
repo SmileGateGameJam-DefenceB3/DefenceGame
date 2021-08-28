@@ -25,11 +25,6 @@ public class TileMap : SingletonMonoBehaviour<TileMap>
 
     public bool IsInBound(int x, int y) => 0 <= x && x < Width && 0 <= y && y < Height;
 
-    private void Awake()
-    {
-        Initialize(true);
-    }
-
     public void Initialize(bool nonDestroy)
     {
         if (nonDestroy)
