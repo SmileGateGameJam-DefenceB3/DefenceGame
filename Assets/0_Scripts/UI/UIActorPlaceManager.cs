@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace UI
 {
@@ -28,22 +27,29 @@ namespace UI
             }
 
             button.SetPressed(true);
-            StartPlacingActor(button.ActorPrefab);
+            StartPlacingActor(button.ActorType);
         }
 
-        public void StartPlacingActor(Actor actorPrefab)
+        public void StartPlacingActor(ActorType actorType)
         {
             StopPlacingActor();
 
-            _placingActor = Instantiate(actorPrefab);
-            _placingActor.Initialize(1, Team.Player);
+            _placingActor = InGameManager.ActorManager.CreatePlacingActor(actorType, Team.Player, 1);
             StartCoroutine(nameof(PlaceActorCo));
         }
 
         public void PlaceActor(Tile tile)
         {
             _placingActor.View.SpriteRenderer.sortingOrder = Constant.ActorSortingOrder;
-            InGameManager.ActorManager.SpawnActor(_placingActor, Team.Player, tile);
+            //
+
+            if (tile.Coord.x >= Constant.Instance.MapSize.x / 2)
+            {
+                _placingActor.SetTeam(Team.CPU);
+                _placingActor.SetDirection(-1);
+            }
+
+            InGameManager.ActorManager.SpawnActor(_placingActor, tile);
 
             _placingActor = null;
             StopPlacingActor();

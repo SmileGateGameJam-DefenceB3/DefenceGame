@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1767694605325350268, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_Name
-      value: Actor 2
+      value: Leopard
       objectReference: {fileID: 0}
     - target: {fileID: 1767694605325350270, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_RootOrder
@@ -57,15 +57,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1767694606154063865, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.29369885
       objectReference: {fileID: 0}
     - target: {fileID: 1767694606154063865, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_Color.g
-      value: 0.027155923
+      value: 0.34286085
       objectReference: {fileID: 0}
     - target: {fileID: 1767694606154063865, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_Color.r
-      value: 0.9245283
+      value: 0.8301887
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767694606154063865, guid: 8fc4d554703815840852caef17583f77, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fc4d554703815840852caef17583f77, type: 3}

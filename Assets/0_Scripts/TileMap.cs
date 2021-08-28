@@ -51,13 +51,4 @@ public class TileMap : MonoBehaviour
             }
         }
     }
-
-    [Button]
-    private void DummySpawn()
-    {
-        var actor = Instantiate(Prefabs.Instance.Actor);
-        actor.Initialize(1, Team.Player);
-        actor.PlaceToTile(_tiles[0, 2]);
-        actor.StartMoveToNextTile();
-    }
 }

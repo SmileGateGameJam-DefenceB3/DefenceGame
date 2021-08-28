@@ -176,7 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 4257392}
-  _actorPrefab: {fileID: 175809634478375491, guid: 0679289d6e6e69b46b671d5c77c66999, type: 3}
+  _keyCode: 51
+  _actorType: 3
 --- !u!114 &4257392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2387,7 +2388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 995525488}
-  _actorPrefab: {fileID: 175809634478375491, guid: a7528811fc65e6247b82f7b315a329d4, type: 3}
+  _keyCode: 49
+  _actorType: 1
 --- !u!114 &995525488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3506,7 +3508,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1320954075}
-  _actorPrefab: {fileID: 175809634478375491, guid: 5964d85a60cfa2149b3bf80e5f2f1863, type: 3}
+  _keyCode: 50
+  _actorType: 2
 --- !u!114 &1320954075
 MonoBehaviour:
   m_ObjectHideFlags: 0

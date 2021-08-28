@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1767694605325350268, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_Name
-      value: Actor 3
+      value: Dog
       objectReference: {fileID: 0}
     - target: {fileID: 1767694605325350270, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_RootOrder
@@ -61,11 +61,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1767694606154063865, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_Color.g
-      value: 0.2971698
+      value: 0.33105272
       objectReference: {fileID: 0}
     - target: {fileID: 1767694606154063865, guid: 8fc4d554703815840852caef17583f77, type: 3}
       propertyPath: m_Color.r
-      value: 0.34958
+      value: 0.2028302
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767694606154063865, guid: 8fc4d554703815840852caef17583f77, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fc4d554703815840852caef17583f77, type: 3}

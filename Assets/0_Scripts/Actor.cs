@@ -11,20 +11,34 @@ public class Actor : MonoBehaviour
     private int _direction;
     private bool _pauseMoving;
     
+    public ActorData Data { get; private set; }
+    public int Power { get; private set; }
     public Team Team { get; private set; }
     public float MoveSpeed { get; set; }
     public ActorView View => _view;
     
-    public void Initialize(int direction, Team team)
+    public void Initialize(ActorData data, Team team, int direction)
+    {
+        Data = data;
+        MoveSpeed = Constant.Instance.ActorMoveSpeed;
+        SetTeam(team);
+        SetDirection(direction);
+    }
+
+    public void SetTeam(Team team)
+    {
+        Team = team;
+    }
+
+    public void SetDirection(int direction)
     {
         _direction = direction;
-        MoveSpeed = Constant.Instance.ActorMoveSpeed;
-        Team = team;
     }
 
     public void Activate()
     {
         _collider.enabled = true;
+        StartMoveToNextTile();
     }
 
     public void PlaceToTile(Tile tile)
@@ -86,5 +100,66 @@ public class Actor : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (CheckActorCollide(other))
+        {
+            return;
+        }
+
+        CheckItemCollide(other);
+    }
+
+    private bool CheckActorCollide(Collider2D other)
+    {
+        var otherActor = other.GetComponent<Actor>();
+        if (otherActor == null || otherActor.Team == Team)
+        {
+            return false;
+        }
+
+        if (Power == otherActor.Power)
+        {
+            Die();
+            otherActor.Die();
+        }
+        else if (Power > otherActor.Power)
+        {
+            otherActor.Die();
+        }
+        else
+        {
+            Die();
+        }
+
+        return true;
+    }
+
+    private void CheckItemCollide(Collider2D other)
+    {
+        var item = other.GetComponent<Item>();
+        if (item == null)
+        {
+            return;
+        }
+
+        if (CanTakeItem(item))
+        {
+            item.ApplyEffect(this);
+            item.DestroySelf();
+        }        
+    }
+    
+    private bool CanTakeItem(Item item)
+    {
+        return true;
+    }
+
+    public void Die()
+    {
+        InGameManager.ActorManager.RemoveActor(this);
+        Destroy(gameObject);
     }
 }
