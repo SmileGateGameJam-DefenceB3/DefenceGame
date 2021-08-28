@@ -16,15 +16,18 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     [SerializeField] private Kingdom _cpuKingdom;
     [SerializeField] private Tutorial _tutorial;
     [SerializeField] private ItemRespawn _itemSpawner;
-    
+
     public static ActorManager ActorManager => Instance._actorManager;
     private ActorManager _actorManager;
 
     public static TileMap TileMap => Instance._tileMap;
     private TileMap _tileMap;
 
+    public static int StageIndex;
+
     public GameState GameState { get; private set; }
 
+    public StageData.Stage CurrentStage { get; set; }
     private int _gold;
 
     public int Gold
@@ -43,6 +46,8 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     {
         base.Awake();
 
+        CurrentStage = StageData.Instance.Stages[StageIndex];
+        
         _actorManager = new ActorManager();
         _tileMap = FindObjectOfType(typeof(TileMap)) as TileMap;
         _tileMap.Initialize(true);
@@ -53,14 +58,21 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 
     private void Start()
     {
-        Gold = Constant.Instance.MaxGold;
+        Gold = CurrentStage.PlayerGold;
 
         if (!SoundManager.Instance.AudioSource.isPlaying)
         {
             SoundManager.PlayBGM(ClipType.InGameBGM);
         }
 
-        _tutorial.gameObject.SetActive(true);
+        if (StageIndex > 0)
+        {
+            StartGame();
+        }
+        else
+        {
+            _tutorial.gameObject.SetActive(true);
+        }
     }
 
     public void StartGame()

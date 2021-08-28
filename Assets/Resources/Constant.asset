@@ -16,5 +16,4 @@ MonoBehaviour:
   TileSize: {x: 1.7, y: 1.6}
   ActorMoveSpeed: 1
   MaxHP: 20
-  MaxGold: 80
-  FoodCost: 0
+  MaxGold: 150
