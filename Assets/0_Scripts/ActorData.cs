@@ -4,8 +4,9 @@ public enum ActorType
 {
     None,
     Rabbit,
-    Dog,
     Leopard,
+    Lion,
+    Elephant,
 }
 
 [CreateAssetMenu]
@@ -16,4 +17,5 @@ public class ActorData : ScriptableObject
     public string Name;
     public int MaxLevel;
     public int Grade;
+    public int Cost;
 }

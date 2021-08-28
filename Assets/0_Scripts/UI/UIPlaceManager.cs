@@ -9,6 +9,7 @@ namespace UI
     {
         private List<UIPlaceButton> _buttons;
         private Actor _placingActor;
+        private UIPlaceButton _currentButton;
 
         private void Awake()
         {
@@ -22,6 +23,7 @@ namespace UI
         public void OnClick_ActorButton(UIPlaceButtonActor actorButton)
         {
             StopPlacing();
+            _currentButton = actorButton;
             StartPlacingActor(actorButton.ActorType);
             actorButton.SetPressed(true);
         }
@@ -29,6 +31,7 @@ namespace UI
         public void OnClick_FoodButton(UIPlaceButtonFood foodButton)
         {
             StopPlacing();
+            _currentButton = foodButton;
             StartCoroutine(nameof(StartFeeding));
             foodButton.SetPressed(true);
         }
@@ -41,8 +44,6 @@ namespace UI
 
         public void PlaceActor(Tile tile)
         {
-            _placingActor.View.SpriteRenderer.sortingOrder = Constant.ActorSortingOrder;
-
             if (IsEnemyArea(tile))
             {
                 if (!GameSetting.Instance.TestEnemyPlace)
@@ -55,6 +56,7 @@ namespace UI
                 _placingActor.SetDirection(-1);
             }
 
+            InGameManager.Instance.Gold -= _currentButton.GetCost();
             InGameManager.ActorManager.SpawnActor(_placingActor, tile);
 
             _placingActor = null;
@@ -73,8 +75,6 @@ namespace UI
 
         private IEnumerator PlaceActorCo()
         {
-            _placingActor.View.SpriteRenderer.sortingOrder = Constant.PlacingActorSortingOrder;
-
             bool isFirstFrame = true;
             while (true)
             {
@@ -126,6 +126,8 @@ namespace UI
             {
                 Destroy(_placingActor.gameObject);
             }
+
+            _currentButton = null;
         }
 
         public void StartFeeding()

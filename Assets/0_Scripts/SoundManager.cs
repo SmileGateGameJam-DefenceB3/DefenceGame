@@ -3,23 +3,18 @@ using UnityEngine;
 
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
-    private AudioSource _audioSource;
-    
-    private void Awake()
+    [SerializeField] private AudioSource _audioSource;
+
+    public AudioSource AudioSource => _audioSource;
+
+    public static void PlaySfx(ClipType type)
     {
-        _audioSource = gameObject.AddComponent<AudioSource>();
-        _audioSource.playOnAwake = false;
-        DontDestroyOnLoad(gameObject);
+        Instance._audioSource.PlayOneShot(AudioDatabase.Instance.GetClip(type));
     }
 
-    public void PlaySfx(AudioClip clip)
+    public static void PlayBGM(ClipType type)
     {
-        _audioSource.PlayOneShot(clip);
-    }
-
-    public void PlayBGM(AudioClip clip)
-    {
-        _audioSource.clip = clip;
-        _audioSource.Play();
+        Instance._audioSource.clip = AudioDatabase.Instance.GetClip(type);
+        Instance._audioSource.Play();
     }
 }

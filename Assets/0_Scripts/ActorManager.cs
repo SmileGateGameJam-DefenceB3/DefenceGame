@@ -19,9 +19,11 @@ public class ActorManager
         }
     }
 
+    public ActorData GetActorData(ActorType type) => _actorDataList[type];
+
     public Actor CreatePlacingActor(ActorType actorType, Team team, int direction)
     {
-        var actorData = _actorDataList[actorType];
+        var actorData = GetActorData(actorType);
         var actor = Object.Instantiate(actorData.Prefab);
         actor.Initialize(actorData, team, direction);
         return actor;

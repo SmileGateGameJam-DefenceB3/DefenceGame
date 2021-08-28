@@ -11,4 +11,6 @@ public class Constant : SingletonScriptableObject<Constant>
     public Vector2 TileSize;
     public float ActorMoveSpeed;
     public int MaxHP;
+    public int MaxGold;
+    public int FoodCost;
 }

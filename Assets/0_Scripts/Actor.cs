@@ -52,11 +52,13 @@ public class Actor : MonoBehaviour
     public void SetDirection(int direction)
     {
         _direction = direction;
+        View.transform.localRotation = direction == -1 ? Quaternion.identity : Quaternion.Euler(0, 180f, 0);
     }
 
     public void Activate()
     {
         _collider.enabled = true;
+        View.Activate();
         StartMoveToNextTile();
     }
 
@@ -135,11 +137,11 @@ public class Actor : MonoBehaviour
 
             bool MoveStepTo(float targetX)
             {
-                if (InGameManager.Instance.GameState == GameState.End)
+                if (InGameManager.Instance.GameState != GameState.Playing)
                 {
                     return false;
                 }
-                
+
                 float currentX = transform.position.x;
                 currentX += _direction * MoveSpeed * Time.deltaTime;
 
@@ -165,8 +167,7 @@ public class Actor : MonoBehaviour
 
     private void OnReachEnd()
     {
-        InGameManager.Instance.ActorReachedEnd(this);
-        Die();
+        Die(false, false);
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -195,7 +196,7 @@ public class Actor : MonoBehaviour
         if (Strength == otherActor.Strength)
         {
             Die();
-            otherActor.Die();
+            otherActor.Die(true, false);
         }
         else if (Strength > otherActor.Strength)
         {
@@ -218,6 +219,7 @@ public class Actor : MonoBehaviour
             return;
         }
 
+        SoundManager.PlaySfx(ClipType.LevelUp);
         SetLevel(Level + 1);
     }
 
@@ -225,14 +227,8 @@ public class Actor : MonoBehaviour
     {
         var item = other.GetComponent<Item>();
         if (item == null)
-        {
             return;
-        }
-
-        if (CanTakeItem(item))
-        {
-            item.DestroySelf();
-        }
+        item.Func(this);
     }
 
     private bool CanTakeItem(Item item)
@@ -240,9 +236,29 @@ public class Actor : MonoBehaviour
         return true;
     }
 
-    public void Die()
+    public async void Die(bool playAnimation = true, bool playSound = true)
     {
+        if (playSound)
+        {
+            SoundManager.PlaySfx(ClipType.Die);
+        }
+
         InGameManager.ActorManager.RemoveActor(this);
+        _collider.enabled = false;
+        StopCoroutine(nameof(MoveToNextTileCo));
+
+        if (playAnimation)
+        {
+            await View.Die();
+        }
+        else
+        {
+            await View.Attack();
+            // xd
+            InGameManager.Instance.ActorReachedEnd(this);
+            await View.FadeOut();
+        }
+
         Destroy(gameObject);
     }
 }

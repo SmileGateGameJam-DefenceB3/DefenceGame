@@ -13,11 +13,21 @@ public class Kingdom : MonoBehaviour
         get => _life;
         set
         {
-            _life = Mathf.Max(0, value);
-            _hpBar.SetValue((float) _life / Constant.Instance.MaxHP);
+            var prev = _life;
+            _life = Mathf.Clamp(value, 0, Constant.Instance.MaxHP); 
+
+            float ratio = (float) _life / Constant.Instance.MaxHP;
+            if (prev > _life)
+            {
+                _hpBar.SetValue(ratio);
+            }
+            else
+            {
+                _hpBar.SetValueNoAnimation(ratio);
+            }
         }
     }
-
+    
     public void Initialize()
     {
         _life = Constant.Instance.MaxHP;

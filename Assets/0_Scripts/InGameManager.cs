@@ -1,8 +1,8 @@
 ﻿using System;
 using Common;
-using System.Collections;
 using UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum GameState
 {
@@ -19,14 +19,30 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     
     public static ActorManager ActorManager => Instance._actorManager;
     private ActorManager _actorManager;
-
+    
     public static TileMap TileMap => Instance._tileMap;
     private TileMap _tileMap;
 
     public GameState GameState { get; private set; }
 
-    private void Awake()
+    private int _gold;
+
+    public int Gold
     {
+        get => _gold;
+        set
+        {
+            _gold = value;
+            OnGoldChanged.Invoke(value);
+        }
+    }
+
+    public UnityEvent<int> OnGoldChanged = new UnityEvent<int>();
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
         _actorManager = new ActorManager();
         _tileMap = FindObjectOfType(typeof(TileMap)) as TileMap;
         _tileMap.Initialize(true);
@@ -37,6 +53,13 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 
     private void Start()
     {
+        Gold = Constant.Instance.MaxGold;
+
+        if (!SoundManager.Instance.AudioSource.isPlaying)
+        {
+            SoundManager.PlayBGM(ClipType.InGameBGM);
+        }
+        
         StartGame();
     }
 
