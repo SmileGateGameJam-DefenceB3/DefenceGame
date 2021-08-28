@@ -15,6 +15,7 @@ namespace UI
         private void Awake()
         {
             _originalString = _text.text;
+            InGameManager.Instance.OnGoldChanged.AddListener(value => SetValue(value, Constant.Instance.MaxGold));
         }
 
         public void SetValue(int value, int maxValue)

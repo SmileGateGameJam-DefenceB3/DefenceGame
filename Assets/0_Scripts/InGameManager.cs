@@ -1,6 +1,8 @@
-﻿using Common;
+﻿using System;
+using Common;
 using UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum GameState
 {
@@ -25,15 +27,17 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 
     private int _gold;
 
-    private int Gold
+    public int Gold
     {
         get => _gold;
         set
         {
             _gold = value;
-            InGameUIManager.Instance.GoldUI.SetValue(value, Constant.Instance.MaxGold);
+            OnGoldChanged.Invoke(value);
         }
     }
+
+    public UnityEvent<int> OnGoldChanged = new UnityEvent<int>();
 
     private void Awake()
     {
