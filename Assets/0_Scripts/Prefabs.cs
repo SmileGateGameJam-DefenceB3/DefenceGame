@@ -6,4 +6,5 @@ public class Prefabs : SingletonScriptableObject<Prefabs>
 {
     public TileMap TileMap;
     public Tile Tile;
+    public GameObject DustEffect;
 }

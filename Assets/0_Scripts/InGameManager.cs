@@ -81,18 +81,18 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
             {
                 if (Gold == 0 && AmazingAIScript.Instance.Gold == 0)
                 {
-                    EndGame();
+                    EndGame(Result.Draw);
                 }
             }
         }
     }
 
-    public void EndGame()
+    public void EndGame(Result result)
     {
         AmazingAIScript.Instance.Stop();
         GameState = GameState.End;
 
-        InGameUIManager.Instance.GameOverScreen.gameObject.SetActive(true);
+        InGameUIManager.Instance.GameOverScreen.Open(result);
     }
 
     public Kingdom GetKingdom(Team team)
@@ -107,7 +107,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
         if (enemyKingdom.Life == 0)
         {
             //
-            EndGame();
+            EndGame(actor.Team == Team.Player ? Result.Win : Result.Lost);
         }
     }
 }

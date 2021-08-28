@@ -54,6 +54,11 @@ namespace UI
 
         public void SetPressed(bool isPressed)
         {
+            if (!_button.interactable)
+            {
+                return;
+            }
+            
             if (isPressed)
             {
                 _animator.SetTrigger("Pressed");

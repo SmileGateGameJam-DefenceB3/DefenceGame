@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ItemRespawn : MonoBehaviour
 {
@@ -10,8 +12,17 @@ public class ItemRespawn : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnHealthCo());
-        StartCoroutine(SpawnLevelUpCo());
+        StartCoroutine(nameof(SpawnHealthCo));
+        StartCoroutine(nameof(SpawnLevelUpCo));
+    }
+
+    private void Update()
+    {
+        if (InGameManager.Instance.GameState != GameState.Playing)
+        {
+            StopCoroutine(nameof(SpawnHealthCo));
+            StopCoroutine(nameof(SpawnLevelUpCo));
+        }
     }
 
     private IEnumerator SpawnHealthCo()
@@ -21,7 +32,6 @@ public class ItemRespawn : MonoBehaviour
             float delay = Random.Range(9f, 11f);
             yield return new WaitForSeconds(delay);
             SpawnItem(0);
-
         }
     }
 

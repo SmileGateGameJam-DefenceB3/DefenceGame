@@ -61,6 +61,8 @@ public class Actor : MonoBehaviour
 
     public void Activate()
     {
+        Instantiate(Prefabs.Instance.DustEffect, transform.position, Quaternion.identity);
+        
         _collider.enabled = true;
         View.Activate();
         StartMoveToNextTile();
@@ -171,7 +173,6 @@ public class Actor : MonoBehaviour
 
     private void OnReachEnd()
     {
-        SoundManager.PlaySfx(ClipType.HitPlayer);
         Die(false, false);
     }
 
@@ -279,6 +280,7 @@ public class Actor : MonoBehaviour
             await View.Attack();
             // xd
             InGameManager.Instance.ActorReachedEnd(this);
+            SoundManager.PlaySfx(ClipType.HitPlayer);
             await View.FadeOut();
         }
 
