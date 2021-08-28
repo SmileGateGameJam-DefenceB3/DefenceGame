@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 public class Actor : MonoBehaviour
@@ -126,7 +128,6 @@ public class Actor : MonoBehaviour
 
     private void OnReachEnd()
     {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -154,14 +155,35 @@ public class Actor : MonoBehaviour
         }
         else if (Power > otherActor.Power)
         {
+            LevelUp();
             otherActor.Die();
         }
         else
         {
+            otherActor.LevelUp();
             Die();
         }
 
         return true;
+    }
+
+    private Tween _levelUpTween;
+    public void LevelUp()
+    {
+        if (Level < Data.MaxLevel)
+        {
+            SetLevel(Level + 1);
+        }
+
+        if (_levelUpTween != null && !_levelUpTween.IsComplete())
+        {
+            _levelUpTween.Kill();
+        }
+
+        View.transform.localScale = Vector3.one;
+
+        _levelUpTween = View.transform.DOPunchScale(Vector3.one * 0.25f, 0.75f, 1)
+            .SetEase(Ease.InOutQuad);
     }
 
     private void CheckItemCollide(Collider2D other)
