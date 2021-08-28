@@ -77,7 +77,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
         InGameUIManager.Instance.GameOverScreen.gameObject.SetActive(true);
     }
 
-    private Kingdom GetKingdom(Team team)
+    public Kingdom GetKingdom(Team team)
     {
         return team == Team.Player ? _playerKingdom : _cpuKingdom;
     }
