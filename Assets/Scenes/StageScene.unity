@@ -4444,6 +4444,7 @@ MonoBehaviour:
   _playerKingdom: {fileID: 1105795299}
   _cpuKingdom: {fileID: 468160372}
   _tutorial: {fileID: 1311440657}
+  _itemSpawner: {fileID: 1048616334}
   OnGoldChanged:
     m_PersistentCalls:
       m_Calls: []

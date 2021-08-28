@@ -10,14 +10,22 @@ public class ItemRespawn : MonoBehaviour
     public GameObject healthItem;
     public GameObject levelUpItem;
 
-    private void Start()
+    private bool _isStarted;
+
+    public void StartSpawn()
     {
+        _isStarted = true;
         StartCoroutine(nameof(SpawnHealthCo));
         StartCoroutine(nameof(SpawnLevelUpCo));
     }
 
     private void Update()
     {
+        if (!_isStarted)
+        {
+            return;
+        }
+        
         if (InGameManager.Instance.GameState != GameState.Playing)
         {
             StopCoroutine(nameof(SpawnHealthCo));

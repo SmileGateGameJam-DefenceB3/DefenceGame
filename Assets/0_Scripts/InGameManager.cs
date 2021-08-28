@@ -16,7 +16,8 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     [SerializeField] private Kingdom _playerKingdom;
     [SerializeField] private Kingdom _cpuKingdom;
     [SerializeField] private Tutorial _tutorial;
-
+    [SerializeField] private ItemRespawn _itemSpawner;
+    
     public static ActorManager ActorManager => Instance._actorManager;
     private ActorManager _actorManager;
 
@@ -72,6 +73,8 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
         {
             AmazingAIScript.Instance.Run();
         }
+
+        _itemSpawner.StartSpawn();
     }
 
     private void Update()
