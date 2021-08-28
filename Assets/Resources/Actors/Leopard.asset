@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   Prefab: {fileID: 175809634478375491, guid: d96b5acef690cc740b07d40fe3d610d7, type: 3}
-  Name: 
+  Name: "\uD751\uD45C\uBC94"
   MaxLevel: 4
   Grade: 3
   Cost: 3

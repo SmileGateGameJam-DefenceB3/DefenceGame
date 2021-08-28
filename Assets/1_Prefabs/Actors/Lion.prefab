@@ -176,7 +176,7 @@ PrefabInstance:
     - target: {fileID: 7578409990855191493, guid: 0a40e8bcb4f01c5468e1fe17fd5ef74b, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: e12da607c6bd1754b8737bcf6f2f55b7, type: 2}
+      objectReference: {fileID: 22100000, guid: c1a60258e3e830248b359a80a626b1e9, type: 2}
     - target: {fileID: 7704088668845566928, guid: 0a40e8bcb4f01c5468e1fe17fd5ef74b, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: -0.38450974

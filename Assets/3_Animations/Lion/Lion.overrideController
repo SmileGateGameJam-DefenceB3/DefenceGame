@@ -7,5 +7,11 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Lion
-  m_Controller: {fileID: 0}
-  m_Clips: []
+  m_Controller: {fileID: 9100000, guid: ff58d59575e2f804899dc49d7006520d, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: da5e9eef6f5ecc647b0048554c711b61, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 00295fe8cd3e1ef419668393783da2ed, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 89768486c95d21c46bce1f76b2ef0d1e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b0b17e84e214e924fb5c09767e4a31d3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f1c42878e63aae64883f48668c19f397, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a767b58169b518549ba967ef99a52118, type: 2}

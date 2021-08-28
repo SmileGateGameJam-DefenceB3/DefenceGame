@@ -7,5 +7,11 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BlackPanther
-  m_Controller: {fileID: 0}
-  m_Clips: []
+  m_Controller: {fileID: 9100000, guid: ff58d59575e2f804899dc49d7006520d, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: da5e9eef6f5ecc647b0048554c711b61, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 879c9a511dfc3b6459ec07f5f950fcb5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 89768486c95d21c46bce1f76b2ef0d1e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 09077b6083f36034cbc95a68c12f383f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f1c42878e63aae64883f48668c19f397, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 917285038aa2bd04291a12d7dfa42e16, type: 2}
