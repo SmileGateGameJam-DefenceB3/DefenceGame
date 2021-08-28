@@ -3918,8 +3918,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnTime: 2
-  healthItem: {fileID: 1296038963402276603, guid: 28e3405118925b3478ecfaf48af9982c, type: 3}
-  levelUpItem: {fileID: 3181980908367313744, guid: 532175148cf942f4dbdb688d1dc4d0d2, type: 3}
+  healthItem: {fileID: 5709745028380978230, guid: 5b60511516347cd46995721bb7ae3933, type: 3}
+  levelUpItem: {fileID: 2190677371152540014, guid: 3ec16c2bf540a8c4f911df01efff0318, type: 3}
 --- !u!114 &1048616335
 MonoBehaviour:
   m_ObjectHideFlags: 0
