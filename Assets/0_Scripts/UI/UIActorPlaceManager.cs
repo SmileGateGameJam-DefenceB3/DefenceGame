@@ -41,10 +41,15 @@ namespace UI
         public void PlaceActor(Tile tile)
         {
             _placingActor.View.SpriteRenderer.sortingOrder = Constant.ActorSortingOrder;
-            //
 
             if (tile.Coord.x >= Constant.Instance.MapSize.x / 2)
             {
+                if (!GameSetting.Instance.TestEnemyPlace)
+                {
+                    StopPlacingActor();
+                    return;
+                }
+
                 _placingActor.SetTeam(Team.CPU);
                 _placingActor.SetDirection(-1);
             }

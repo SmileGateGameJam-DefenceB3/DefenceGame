@@ -5,24 +5,33 @@ public class Actor : MonoBehaviour
 {
     [SerializeField] private Collider2D _collider;
     [SerializeField] private ActorView _view;
-    
+
     private Tile _currentTile;
     private Tile _nextTile;
     private int _direction;
     private bool _pauseMoving;
-    
+
     public ActorData Data { get; private set; }
+    public ActorView View => _view;
+
     public int Power { get; private set; }
+    public int Level { get; private set; }
     public Team Team { get; private set; }
     public float MoveSpeed { get; set; }
-    public ActorView View => _view;
-    
+
     public void Initialize(ActorData data, Team team, int direction)
     {
         Data = data;
         MoveSpeed = Constant.Instance.ActorMoveSpeed;
+        SetLevel(1);
         SetTeam(team);
         SetDirection(direction);
+    }
+
+    public void SetLevel(int level)
+    {
+        Level = level;
+        Power = Data.BasePower + (level - 1) * Data.PowerPerLevel;
     }
 
     public void SetTeam(Team team)
@@ -46,7 +55,7 @@ public class Actor : MonoBehaviour
         transform.position = tile.transform.position;
         _currentTile = tile;
         _nextTile = null;
-        
+
         StopCoroutine(nameof(MoveToNextTileCo));
     }
 
@@ -62,19 +71,39 @@ public class Actor : MonoBehaviour
             _nextTile = _currentTile.GetAdjacent(_direction, 0);
             if (_nextTile == null)
             {
-                yield break;
+                while (true)
+                {
+                    float goalX = _currentTile.transform.position.x + _direction * Constant.Instance.TileSize.x / 2f;
+                    if (MoveStepTo(goalX))
+                    {
+                        OnReachEnd();
+                        yield break;
+                    }
+
+                    yield return null;
+                }
             }
-            
+
             while (true)
             {
                 if (_pauseMoving)
                 {
                     yield return null;
                 }
-                
-                float currentX = transform.position.x;
-                float targetX = _nextTile.transform.position.x;
 
+                if (MoveStepTo(_nextTile.transform.position.x))
+                {
+                    _currentTile = _nextTile;
+                    yield return null;
+                    break;
+                }
+
+                yield return null;
+            }
+
+            bool MoveStepTo(float targetX)
+            {
+                float currentX = transform.position.x;
                 currentX += _direction * MoveSpeed * Time.deltaTime;
 
                 if (_direction < 0)
@@ -89,17 +118,15 @@ public class Actor : MonoBehaviour
                 var position = transform.position;
                 position.x = currentX;
                 transform.position = position;
-                
-                if (currentX == targetX)
-                {
-                    _currentTile = _nextTile;
-                    yield return null;
-                    break;
-                }
-                
-                yield return null;
+
+                return currentX == targetX;
             }
         }
+    }
+
+    private void OnReachEnd()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -149,9 +176,9 @@ public class Actor : MonoBehaviour
         {
             item.ApplyEffect(this);
             item.DestroySelf();
-        }        
+        }
     }
-    
+
     private bool CanTakeItem(Item item)
     {
         return true;
