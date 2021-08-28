@@ -232,7 +232,6 @@ public class Actor : MonoBehaviour
 
         if (CanTakeItem(item))
         {
-            item.ApplyEffect(this);
             item.DestroySelf();
         }
     }

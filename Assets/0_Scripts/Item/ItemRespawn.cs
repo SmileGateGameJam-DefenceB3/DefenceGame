@@ -37,9 +37,9 @@ public class ItemRespawn : MonoBehaviour
             //º¹Á¦
             if (itemPrefab is null)
                 continue;
-            var obj = Instantiate(itemPrefab, new Vector3(tile.x, tile.y,
+            var obj = Instantiate(itemPrefab, new Vector3(tile.x, tile.y + 0.1f,
                 0), Quaternion.identity);
-            obj.transform.localScale = new Vector2(0.3f, 0.3f);
+            obj.transform.localScale = new Vector2(0.0f, 0.0f);
             Debug.Log(obj.name);
             
         }
