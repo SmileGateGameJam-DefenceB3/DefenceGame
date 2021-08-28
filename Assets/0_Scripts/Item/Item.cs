@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
@@ -25,5 +26,13 @@ public abstract class Item : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         viewImage.transform.DOMoveY(oriPos.y + 0.075f, 1.0f, false).SetLoops(-1, LoopType.Yoyo);
         //shadowImage.transform.DOMoveY(oriPos.y + 0.075f, 1.0f, false).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    private void OnDestroy()
+    {
+        var viewImage = transform.Find("ViewImage").gameObject;
+        viewImage.transform.DOKill();
+        var shadowImage = transform.Find("ShaderImage").gameObject;
+        shadowImage.transform.DOKill();
     }
 }

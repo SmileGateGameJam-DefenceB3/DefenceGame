@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class Actor : MonoBehaviour
@@ -259,6 +260,7 @@ public class Actor : MonoBehaviour
             await View.FadeOut();
         }
 
+        View.DOKill();
         Destroy(gameObject);
     }
 }
