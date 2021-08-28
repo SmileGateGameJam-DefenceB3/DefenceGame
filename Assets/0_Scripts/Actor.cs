@@ -18,6 +18,7 @@ public class Actor : MonoBehaviour
     public ActorView View => _view;
 
     public float Progress;
+    public int Damage { get; private set; }
     public int Power { get; private set; }
     public int Level { get; private set; }
     public Team Team { get; private set; }
@@ -161,7 +162,7 @@ public class Actor : MonoBehaviour
 
     private void OnReachEnd()
     {
-        //
+        InGameManager.Instance.ActorReachedEnd(this);
         Die();
     }
 

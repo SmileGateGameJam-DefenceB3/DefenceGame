@@ -7,7 +7,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     
     public Tile CurrentHoveredTile { get; private set; }
 
-    private void Awake()
+    private void Start()
     {
         _tileHoverEffect = FindObjectOfType<TileHoverEffect>();
         _tileHoverEffect.SetColor(Color.yellow);
