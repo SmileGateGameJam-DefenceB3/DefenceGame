@@ -27,6 +27,8 @@ public class Actor : MonoBehaviour
 
     public bool CanLevelUp => Level < Data.MaxLevel;
 
+    private static int Id;
+
     public void Initialize(ActorData data, Team team, int direction)
     {
         Data = data;
@@ -34,6 +36,8 @@ public class Actor : MonoBehaviour
         SetLevel(1, true);
         SetTeam(team);
         SetDirection(direction);
+
+        View.transform.position += new Vector3(0, 0, -0.02f * ++Id);
     }
 
     public void SetLevel(int level, bool isInitial = false)

@@ -39,6 +39,7 @@ namespace UI
         public void StartPlacingActor(ActorType actorType)
         {
             _placingActor = InGameManager.ActorManager.CreatePlacingActor(actorType, Team.Player, 1);
+            _placingActor.View.AdjustSortingOrders(Constant.PlacingOrder);
             StartCoroutine(nameof(PlaceActorCo));
         }
 
@@ -56,6 +57,7 @@ namespace UI
                 _placingActor.SetDirection(-1);
             }
 
+            _placingActor.View.AdjustSortingOrders(-Constant.PlacingOrder);
             InGameManager.Instance.Gold -= _currentButton.GetCost();
             InGameManager.ActorManager.SpawnActor(_placingActor, tile);
 

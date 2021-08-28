@@ -240,3 +240,89 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 8542757623768902177, guid: 0eb199b0da382aa4fb160e0d88104b59, type: 3}
   m_PrefabInstance: {fileID: 5077282139841068291}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &3628181929120449989 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8372126876765665478, guid: 0eb199b0da382aa4fb160e0d88104b59, type: 3}
+  m_PrefabInstance: {fileID: 5077282139841068291}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8952426246929561112
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3628181929120449989}
+    m_Modifications:
+    - target: {fileID: 895813581586122044, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_Name
+      value: Helmet
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420896807488459576, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420896807488459576, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420896807488459576, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.47499987
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.47499987
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.47499993
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8791728
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.58568954
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5065486
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.86221147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125818618377336454, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 18.732
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2b60649e2fc9f52409ec55215ae9fca4, type: 3}

@@ -7,6 +7,7 @@ using UnityEngine;
 public class ActorView : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private Helmet _helmet;
 
     private List<SpriteRenderer> _spriteRenderers;
     private Tween _levelUpTween;
@@ -24,8 +25,18 @@ public class ActorView : MonoBehaviour
 
         _levelUpTween = transform.DOPunchScale(Vector3.one * 0.25f, 0.75f, 1)
             .SetEase(Ease.InOutQuad);
+
+        _helmet.OnLevelChanged(level);
     }
 
+    public void AdjustSortingOrders(int adjust)
+    {
+        foreach (var spriteRenderer in _spriteRenderers)
+        {
+            spriteRenderer.sortingOrder += adjust;
+        }
+    }
+    
     public void Activate()
     {
         _animator.enabled = true;
