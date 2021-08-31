@@ -7,6 +7,11 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     public AudioSource AudioSource => _audioSource;
 
+    private void Start()
+    {
+        PlayBGM(ClipType.InGameBGM);
+    }
+
     public static void PlaySfx(ClipType type)
     {
         Instance._audioSource.PlayOneShot(AudioDatabase.Instance.GetClip(type));

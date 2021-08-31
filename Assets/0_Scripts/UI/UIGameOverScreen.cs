@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,13 +18,32 @@ namespace UI
         [SerializeField] private TextMeshProUGUI _title;
         [SerializeField] private GameObject _tuna;
         [SerializeField] private GameObject _clear;
+        [SerializeField] private GameObject _lost;
         [SerializeField] private GameObject _retryButton;
         [SerializeField] private GameObject _nextButton;
+        [SerializeField] private GameObject _creditButton;
+        
 
+        [Button()]
+        public void win()
+        {
+            Open(Result.Win);
+        }
+
+        [Button()]
+        public void lost()
+        {
+            Open(Result.Lost);
+        }
+        
         public void Open(Result result)
         {
+            _lost.SetActive(false);
+            _tuna.SetActive(true);
+            _clear.SetActive(false);
             _retryButton.SetActive(false);
             _nextButton.SetActive(false);
+            _creditButton.SetActive(false);
             
             switch (result)
             {
@@ -39,6 +59,7 @@ namespace UI
                     {
                         _tuna.SetActive(false);
                         _clear.SetActive(true);
+                        _creditButton.SetActive(true);
                     }
                     
                     break;
@@ -46,6 +67,8 @@ namespace UI
                 case Result.Lost:
                 {
                     _title.text = "패배!";
+                    _tuna.SetActive(false);
+                    _lost.SetActive(true);
                     _retryButton.SetActive(true);
                     break;
                 }
@@ -62,6 +85,7 @@ namespace UI
 
         public void OnClick_Leave()
         {
+            SceneManager.LoadScene("MainScene");
         }
 
         public void OnClick_Retry()
@@ -73,6 +97,11 @@ namespace UI
         {
             InGameManager.StageIndex++;
             SceneManager.LoadScene("StageScene");
+        }
+
+        public void OnClick_Credit()
+        {
+            SceneManager.LoadScene("CreditScene");
         }
     }
 }

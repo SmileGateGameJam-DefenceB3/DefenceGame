@@ -28,8 +28,6 @@ public class ButtonManager : MonoBehaviour
     {
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
-
     }
 }

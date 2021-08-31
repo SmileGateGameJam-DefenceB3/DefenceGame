@@ -1,4 +1,6 @@
 ﻿using Common;
+using Cysharp.Threading.Tasks;
+using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +18,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     [SerializeField] private Kingdom _cpuKingdom;
     [SerializeField] private Tutorial _tutorial;
     [SerializeField] private ItemRespawn _itemSpawner;
+    [SerializeField] private TextMeshProUGUI _stagetxt;
 
     public static ActorManager ActorManager => Instance._actorManager;
     private ActorManager _actorManager;
@@ -59,6 +62,7 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
     private void Start()
     {
         Gold = CurrentStage.PlayerGold;
+        _stagetxt.text = $"Stage {StageIndex + 1}";
 
         if (!SoundManager.Instance.AudioSource.isPlaying)
         {
@@ -88,13 +92,14 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
         _itemSpawner.StartSpawn();
     }
 
-    private void Update()
+    private async void Update()
     {
         if (GameState == GameState.Playing)
         {
-            if (ActorManager.GetActorCount() == 0)
+            if (Gold == 0 && AmazingAIScript.Instance.Gold == 0 && ActorManager.GetActorCount() == 0)
             {
-                if (Gold == 0 && AmazingAIScript.Instance.Gold == 0)
+                await UniTask.Delay(1000);
+                if (ActorManager.GetActorCount() == 0)
                 {
                     EndGame(Result.Draw);
                 }
@@ -104,6 +109,11 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 
     public void EndGame(Result result)
     {
+        if (GameState == GameState.End)
+        {
+            return;
+        }
+        
         AmazingAIScript.Instance.Stop();
         GameState = GameState.End;
 
@@ -117,6 +127,11 @@ public class InGameManager : SingletonMonoBehaviour<InGameManager>
 
     public void ActorReachedEnd(Actor actor)
     {
+        if (InGameManager.Instance.GameState != GameState.Playing)
+        {
+            return;
+        }
+        
         var enemyKingdom = GetKingdom(actor.Team.GetEnemy());
         enemyKingdom.Life -= actor.Damage;
         if (enemyKingdom.Life == 0)
